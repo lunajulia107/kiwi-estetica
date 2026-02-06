@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ReactCardFlip from "react-card-flip";
 import { motion } from "framer-motion";
 
 const procedures = [
@@ -121,61 +120,86 @@ const FlipCard = ({ procedure }) => {
   const [flipped, setFlipped] = useState(false);
 
   return (
-    <ReactCardFlip isFlipped={flipped} flipDirection="horizontal" className="w-100">
-      {/* Front */}
+    <div
+      style={{ perspective: "1000px", width: "100%", height: "100%", minHeight: "480px" }}
+      onClick={() => setFlipped(!flipped)}
+    >
       <motion.div
-        onClick={() => setFlipped(true)}
-        className="align-items-start bg-white d-flex flex-column h-100 p-3 rounded-4 w-100"
-        style={{ cursor: "pointer" }}
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        animate={{ rotateY: flipped ? 180 : 0 }}
+        transition={{ duration: 0.6 }}
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          transformStyle: "preserve-3d",
+        }}
       >
-        <img
-          alt={procedure.title}
-          className="card-img-top mb-3 rounded-4"
-          src={procedure.image}
-          style={{ maxHeight: "250px", objectFit: "cover", width: "100%" }}
-        />
-        <p className="badge bg-brown fw-medium rounded-4">{procedure.category}</p>
-        <h5 className="mt-2 text-forest-green">{procedure.title}</h5>
-        <p className="flex-grow-1 mt-2 text-forest-green">{procedure.indication}</p>
-        <div className="align-items-center d-flex justify-content-between mt-3 w-100">
-          <div>
-            <h6 className="fs-5 fw-bolder text-forest-green">R$ {procedure.price}</h6>
-            {procedure.duration && (
-              <small className="fw-medium text-forest-green">{procedure.duration}</small>
-            )}
-          </div>
-          <a
-            className="fw-medium text-decoration-none text-lime-green"
-            href={`/agendar?categoria=${encodeURIComponent(procedure.category)}&procedimento=${encodeURIComponent(procedure.procedure || "")}`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            Agendar
-          </a> 
-        </div>
-      </motion.div>
+        {/* FRONT */}
+        <motion.div
+          className="align-items-start bg-white d-flex flex-column h-100 p-3 rounded-4 w-100"
+          style={{
+            backfaceVisibility: "hidden",
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            cursor: "pointer",
+          }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <img
+            alt={procedure.title}
+            className="bg-opacity-25 card-img-top mb-3 rounded-4"
+            src={procedure.image}
+            style={{ filter: "brightness(75%)", maxHeight: "250px", objectFit: "cover", width: "100%" }}
+          />
+          <p className="badge bg-brown fw-medium rounded-4">{procedure.category}</p>
+          <h5 className="mt-2 text-forest-green">{procedure.title}</h5>
+          <p className="flex-grow-1 mt-2 text-forest-green">{procedure.indication}</p>
 
-      {/* Back */}
-      <motion.div
-        onClick={() => setFlipped(false)}
-        className="bg-forest-green d-flex flex-column h-100 p-3 rounded-4"
-        style={{ cursor: "pointer" }}
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <img
-          alt={procedure.title}
-          className="card-img-top mb-3 rounded-4"
-          src={procedure.icon}
-          style={{ maxHeight: "250px", objectFit: "cover", width: "100%" }}
-        />
-        <h5 className="mt-2 text-white">Descrição</h5>
-        <p className="flex-grow-1 mt-2 text-white">{procedure.description}</p>
+          <div className="align-items-center d-flex justify-content-between mt-3 w-100">
+            <div>
+              <h6 className="fs-5 fw-bolder text-forest-green">R$ {procedure.price}</h6>
+              {procedure.duration && (
+                <small className="fw-medium text-forest-green">{procedure.duration}</small>
+              )}
+            </div>
+
+            <a
+              className="fw-medium text-decoration-none text-lime-green"
+              href={`/agendar?categoria=${encodeURIComponent(procedure.category)}&procedimento=${encodeURIComponent(procedure.procedure || "")}`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              Agendar
+            </a>
+          </div>
+        </motion.div>
+
+        {/* BACK */}
+        <motion.div
+          className="bg-forest-green d-flex flex-column h-100 p-3 rounded-4"
+          style={{
+            backfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            cursor: "pointer",
+          }}
+        >
+          <img
+            alt={procedure.title}
+            className="card-img-top mb-3 rounded-4"
+            src={procedure.icon || procedure.image}
+            style={{ filter: "brightness(75%)", maxHeight: "250px", objectFit: "cover", width: "100%" }}
+          />
+          
+          <h5 className="mt-2 text-white">Descrição</h5>
+          <p className="flex-grow-1 mt-2 text-white">{procedure.description}</p>
+        </motion.div>
       </motion.div>
-    </ReactCardFlip>
+    </div>
   );
 };
 
@@ -242,19 +266,19 @@ const Catalogo = () => {
         viewport={{ once: false, amount: 0.3 }}
         transition={{ duration: 0.8 }}
       >
-        <div className="bg-sage-green d-flex flex-column flex-xl-row gap-4 p-5 position-relative rounded-4 overflow-hidden">
+        <div className="bg-forest-green d-flex flex-column flex-xl-row gap-4 p-5 position-relative rounded-4 overflow-hidden">
           <div className="background-circles"></div>
 
           <div
             className="col-12 col-xl-8 d-flex flex-column gap-3 position-relative"
             style={{ zIndex: 1 }}
           >
-            <h2 className="fs-1 text-forest-green">
+            <h2 className="fs-1 text-white">
               Cuidados <br />
               <span className="fw-bold">Pré-Procedimento</span>
             </h2>
 
-            <p className="fw-normal lead text-forest-green">
+            <p className="fw-normal lead text-white">
               Antes do tratamento, informe seu histórico de saúde, alergias ou uso de medicação.
               Evite sol intenso e produtos irritantes na região a ser tratada por 2 dias antes.
             </p>

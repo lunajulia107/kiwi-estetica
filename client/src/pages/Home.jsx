@@ -19,7 +19,7 @@ const Home = () => {
           minHeight: "672px",
         }}
       >
-        <div className="bg-dark bg-opacity-50 h-100 position-absolute start-0 top-0 w-100"></div>
+        <div className="bg-dark bg-opacity-25 h-100 position-absolute start-0 top-0 w-100"></div>
 
         <div className="p-3 position-absolute text-white top-50 translate-middle-y w-100">
           <div className="container text-center text-xl-start">
@@ -72,8 +72,8 @@ const Home = () => {
             <span className="fw-semibold">revitalizantes</span>.
           </p>
  
-          <div className="bg-forest-green d-flex flex-column-reverse flex-xl-row gap-3 justify-content-between mt-4 overflow-hidden p-4 position-relative rounded-4">
-            <div className="position-absolute start-0 top-0 w-100 h-100 bg-dark bg-opacity-50 z-1"></div>
+          <div className="bg-forest-green d-flex flex-column-reverse flex-xl-row gap-3 justify-content-between mt-4 overflow-hidden p-4 position-relative rounded-4 w-100">
+            <div className="position-absolute start-0 top-0 w-100 h-100 bg-dark bg-opacity-25 z-1"></div>
 
             <div className="align-items-start d-flex flex-column gap-3 p-4 position-relative text-start text-white" style={{ zIndex: 2 }}>
               <h3 className="fs-2 fw-semibold">
@@ -140,11 +140,11 @@ const Home = () => {
       >
         <div className="align-items-center d-flex flex-column flex-lg-row gap-5 position-relative z-1">
           <div className="col-lg-6 overflow-hidden position-relative rounded-4">
-            <div className="bg-dark bg-opacity-50 h-100 position-absolute start-0 top-0 w-100 rounded-4 z-1"></div>
+            <div className="bg-dark bg-opacity-25 h-100 position-absolute start-0 top-0 w-100 rounded-4 z-1"></div>
             <img
               alt="Mulher com sombra no rosto"
               className="img-fluid position-relative"
-              src="/images/home/kiwi-estetica.png"
+              src="/images/tais.png"
             />
           </div>
 
@@ -211,7 +211,7 @@ const Home = () => {
               Quero descobrir
               <span
                 className="align-items-center bg-white d-inline-flex justify-content-center rounded-circle text-lime-green"
-                style={{
+                style={{ 
                   width: '32px',
                   height: '32px',
                   transform: 'rotate(-45deg)',

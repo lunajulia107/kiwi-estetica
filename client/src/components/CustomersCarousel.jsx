@@ -148,7 +148,7 @@ function TestimonialCarousel() {
                         src={testimonial.image}
                         alt={testimonial.name}
                         className="me-3 rounded-circle object-fit-cover"
-                        style={{ width: "48px", height: "48px" }}
+                        style={{ filter: "brightness(75%)", width: "48px", height: "48px" }}
                       />
                     ) : (
                       <div
