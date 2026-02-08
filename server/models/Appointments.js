@@ -2,13 +2,13 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../db/db');
 
 const Appointment = sequelize.define('Appointment', {
-    nome: { type: DataTypes.STRING, allowNull: false },
-    celular: { type: DataTypes.STRING, allowNull: false },
-    categoria: { type: DataTypes.STRING, allowNull: false },
-    procedimento: { type: DataTypes.STRING, allowNull: false },
-    data: { type: DataTypes.DATEONLY, allowNull: false },
-    horario: { type: DataTypes.TIME, allowNull: false },
-    status: { type: DataTypes.STRING, allowNull: false }
+    name: { type: DataTypes.STRING, allowNull: false, field: 'nome' },
+    phone: { type: DataTypes.STRING, allowNull: false, field: 'celular' },
+    category: { type: DataTypes.STRING, allowNull: false, field: 'categoria' },
+    procedure: { type: DataTypes.STRING, allowNull: false, field: 'procedimento' },
+    date: { type: DataTypes.DATEONLY, allowNull: false, field: 'data' },
+    time: { type: DataTypes.TIME, allowNull: false, field: 'horario' },
+    status: { type: DataTypes.STRING, allowNull: false, field: 'status' }
 }, {
     tableName: 'appointments',
     timestamps: false

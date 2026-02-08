@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "initial": "A",
+    "name": "Alice Rocha",
+    "rating": 5,
+    "quote": "A limpeza de pele fez toda a diferença pra mim! Estou começando a cuidar mais do meu rosto e adorei a forma como explicaram tudo com clareza e carinho. Me senti super bem acolhida!",
+    "image": "/images/home/usuarios/alice.png"
+  },
+  {
+    "id": 2,
+    "initial": "C",
+    "name": "Camila Gutierre",
+    "rating": 5,
+    "quote": "Tudo muito prático e moderno, exatamente como eu precisava! Desde o agendamento até o procedimento, senti que cada detalhe foi pensado para facilitar nossa rotina. Nota 10!",
+    "image": "/images/home/usuarios/camila.png"
+  },
+  {
+    "id": 3,
+    "initial": "G",
+    "name": "Gustavo Rocha",
+    "rating": 4,
+    "quote": "Com a correria do trabalho, encontrei aqui um momento só meu. Fiz uma massagem relaxante e saí leve, renovado! O ambiente ajuda muito a desligar e cuidar do corpo e da mente.",
+    "image": "/images/home/usuarios/gustavo.png"
+  },
+  {
+    "id": 4,
+    "initial": "S",
+    "name": "Samara Duarte",
+    "rating": 5,
+    "quote": "Procuro sempre cuidar da minha pele e também relaxar. Fiz microagulhamento e uma massagem na mesma semana e me senti transformada! Atendimento completo e super cuidadoso.",
+    "image": "/images/home/usuarios/samara.png"
+  },
+  {
+    "id": 5,
+    "initial": "T",
+    "name": "Tereza Cristina",
+    "rating": 5,
+    "quote": "Fui muito bem acolhida e me senti segura durante todo o atendimento. As informações foram claras e me passaram total confiança. Adorei o resultado e já indiquei para amigas!",
+    "image": "/images/home/usuarios/tereza.png"
+  }
+]

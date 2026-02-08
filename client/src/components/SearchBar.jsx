@@ -18,30 +18,34 @@ const SearchBar = ({ busca, setBusca }) => {
   };
 
   return (
-    <div className="input-group w-auto">
+    <form 
+      className="input-group w-auto" 
+      role="search" 
+      onSubmit={(e) => e.preventDefault()}
+    >
       <span className="input-group-text" id="search-icon">
-        <i className="bi bi-search" /> 
+        <i aria-hidden="true" className="bi bi-search" /> 
       </span>
       <input
-        type="search"
-        className="form-control"
-        placeholder="Pesquisar por nome..."
-        aria-label="Pesquisar"
         aria-describedby="search-icon"
-        value={valorInput}
+        aria-label="Pesquisar por nome"
+        className="form-control"
         onChange={(e) => setValorInput(e.target.value)}
+        placeholder="Pesquisar por nome..."
+        type="search"
+        value={valorInput}
       />
       {valorInput && (
         <button
-          className="btn btn-outline-secondary"
-          type="button"
-          onClick={limparBusca}
           aria-label="Limpar pesquisa"
+          className="btn btn-outline-secondary"
+          onClick={limparBusca}
+          type="button"
         >
-          &times;
+          <span aria-hidden="true">&times;</span>
         </button>
       )}
-    </div>
+    </form>
   );
 };
 

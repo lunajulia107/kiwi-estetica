@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 
 // Componentes públicos
-import Header from "./components/Header.jsx";
-import Footer from "./components/Footer.jsx";
+import Header from "./components/basic/Header.jsx";
+import Footer from "./components/basic/Footer.jsx";
 
 import AdminHeader from "./components/admin/AdminHeader.jsx";
 import AdminSidebar from "./components/admin/AdminSidebar.jsx";

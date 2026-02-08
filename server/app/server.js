@@ -18,5 +18,5 @@ app.use('/api/agendar', appointmentRoutes);
 app.use('/api/admin', adminRoutes);
 
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Servidor rodando na porta ${PORT}`);
 });

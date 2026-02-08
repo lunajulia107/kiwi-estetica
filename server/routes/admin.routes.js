@@ -2,12 +2,14 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const Admin = require('../models/Admin');
-const auth = require('../auth/adminAuth');
 const { Op, fn, col, literal } = require('sequelize'); 
-const Appointments = require('../models/Appointments'); 
 const moment = require('moment');
 
+const Admin = require('../models/Admin');
+const auth = require('../auth/adminAuth'); 
+const Appointments = require('../models/Appointments'); 
+
+// ================= LOGIN =================
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -18,7 +20,11 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ mensagem: 'Credenciais inválidas' });
         }
 
-        const token = jwt.sign({ id: admin.id }, process.env.SECRET_KEY, { expiresIn: '1h' });
+        const token = jwt.sign(
+            { id: admin.id },
+            process.env.SECRET_KEY,
+            { expiresIn: '1h' }
+        );
 
         res.json({ token });
     } catch (err) {
@@ -26,150 +32,162 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ mensagem: 'Erro interno no servidor' });
     }
 });
- 
+
+// ================= USUÁRIO LOGADO =================
 router.get('/usuario-logado', auth, async (req, res) => {
-  try { 
-    const admin = await Admin.findByPk(req.adminId, {
-      attributes: ['nome', 'email', 'cargo']
-    }); 
+    try { 
+        const admin = await Admin.findByPk(req.adminId, {
+            attributes: ['nome', 'email', 'cargo']
+        }); 
 
-    if (!admin) {
-      return res.status(404).json({ mensagem: 'Administrador não encontrado' });
+        if (!admin) {
+            return res.status(404).json({ mensagem: 'Administrador não encontrado' });
+        }
+
+        res.json(admin);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ mensagem: 'Erro ao buscar dados do administrador' });
     }
-
-    res.json(admin);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ mensagem: 'Erro ao buscar dados do administrador' });
-  }
 });
 
+// ================= DASHBOARD =================
 router.get('/dashboard', auth, async (req, res) => {
     try {
-        const hoje = moment().format('YYYY-MM-DD');
-        const agora = moment().format('HH:mm:ss');
+        const today = moment().format('YYYY-MM-DD');
+        const now = moment().format('HH:mm:ss');
 
-        const proximo = await Appointments.findOne({
+        const next = await Appointments.findOne({
             where: {
-                data: hoje,
-                horario: { [Op.gte]: agora },
+                date: today,
+                time: { [Op.gte]: now },
                 status: 'confirmado'
             },
-            order: [['horario', 'ASC']]
+            order: [['time', 'ASC']]
         });
 
-        const totalHoje = await Appointments.count({
-            where: { data: hoje }
+        const totalToday = await Appointments.count({
+            where: { date: today }
         });
 
-        const pendentes = await Appointments.count({
-            where: { data: hoje, status: 'pendente' }
+        const pending = await Appointments.count({
+            where: { date: today, status: 'pendente' }
         });
 
-        const confirmados = await Appointments.count({
-            where: { data: hoje, status: 'confirmado' }
+        const confirmed = await Appointments.count({
+            where: { date: today, status: 'confirmado' }
         });
- 
-        const categoriasFixas = ['procedimentos faciais', 'procedimentos corporais', 'terapias complementares'];
- 
-        const contagensCategorias = await Promise.all(
-            categoriasFixas.map(categoria =>
-                Appointments.count({ where: { data: hoje, categoria } })
+
+        const fixedCategories = [
+            'procedimentos faciais',
+            'procedimentos corporais',
+            'terapias complementares'
+        ];
+
+        const countsCategories = await Promise.all(
+            fixedCategories.map(category =>
+                Appointments.count({ where: { date: today, category } })
             )
         );
 
-        const procedimentos = await Appointments.findAll({
+        const procedures = await Appointments.findAll({
             attributes: [
                 'procedimento',
                 [fn('COUNT', col('procedimento')), 'quantidade']
             ],
             group: ['procedimento'],
             order: [[literal('quantidade'), 'DESC']],
-            limit: 5
+            limit: 5,
+            raw: true
         });
 
-        const resposta = {
-            proximaCliente: proximo ? proximo.nome : null,
-            totalHoje,
-            agendamentosPendentes: pendentes,
-            agendamentosConfirmados: confirmados,
+        const response = {
+            nextClient: next ? next.name : null,
+            totalToday,
+            pendingAppointments: pending,
+            confirmedAppointments: confirmed,
             agendamentosCategoria: {
-                labels: categoriasFixas.map(c => c.charAt(0).toUpperCase() + c.slice(1)),  
-                valores: contagensCategorias
+                labels: fixedCategories.map(c => c.charAt(0).toUpperCase() + c.slice(1)),
+                values: countsCategories
             },
-            topProcedimentos: {
-                labels: procedimentos.map(p => p.procedimento),
-                valores: procedimentos.map(p => parseInt(p.dataValues.quantidade))
+            topProcedures: {
+                labels: procedures.map(p => p.procedimento),
+                values: procedures.map(p => Number(p.quantidade))
             }
         };
- 
-        res.json(resposta);
-    } catch (err) { 
-        res.status(500).json({ mensagem: "Erro ao buscar dados do dashboard" });
-    }
-}); 
 
+        res.json(response);
+    } catch (err) { 
+        console.error(err);
+        res.status(500).json({ message: 'Erro ao buscar dados do dashboard' });
+    }
+});
+
+// ================= AGENDAMENTOS =================
 router.get('/agendamentos', auth, async (req, res) => {
     try {
-        const agendamentos = await Appointments.findAll({
-            order: [['data', 'ASC'], ['horario', 'ASC']],
+        const appointments = await Appointments.findAll({
+            order: [['date', 'ASC'], ['time', 'ASC']],
             attributes: [
                 'id',
-                'nome',
-                'celular',
-                'categoria',
-                'procedimento',
-                'data',
-                'horario',
+                'name',
+                'phone',
+                'category',
+                'procedure',
+                'date',
+                'time',
                 'status'
             ],
             raw: true
         });
 
-        console.log(agendamentos);
-
-        if (agendamentos.length === 0) {
+        if (!appointments.length) {
             return res.status(200).json({
                 status: 'sucesso',
-                mensagem: 'Nenhum agendamento encontrado',
-                dados: []
+                message: 'Nenhum agendamento encontrado',
+                data: []
             });
         }
 
         res.status(200).json({
             status: 'sucesso',
-            total: agendamentos.length,
-            dados: agendamentos
+            total: appointments.length,
+            data: appointments
         });
     } catch (err) { 
+        console.error(err);
         res.status(500).json({
             status: 'erro',
-            mensagem: 'Erro ao buscar agendamentos'
+            message: 'Erro ao buscar agendamentos'
         });
     }
-}); 
+});
 
+// ================= CONFIRMAR AGENDAMENTO =================
 router.put('/agendamentos/:id/confirmar', auth, async (req, res) => {
     const { id } = req.params;
 
     try {
-        const agendamento = await Appointments.findByPk(id);
+        const appointment = await Appointments.findByPk(id);
 
-        if (!agendamento) {
-            return res.status(404).json({ mensagem: 'Agendamento não encontrado' });
+        if (!appointment) {
+            return res.status(404).json({ message: 'Agendamento não encontrado' });
         }
 
-        if (agendamento.status !== 'pendente') {
-            return res.status(400).json({ mensagem: 'Agendamento não está pendente' });
+        if (appointment.status !== 'pendente') {
+            return res.status(400).json({ message: 'Agendamento não está pendente' });
         }
 
-        agendamento.status = 'confirmado';
-        await agendamento.save();
+        appointment.status = 'confirmado';
+        await appointment.save();
 
-        res.json({ mensagem: 'Agendamento confirmado com sucesso', agendamento });
+        res.json({
+            message: 'Agendamento confirmado com sucesso',
+            appointment
+        });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ mensagem: 'Erro ao confirmar agendamento' });
+        res.status(500).json({ message: 'Erro ao confirmar agendamento' });
     }
 });
 

@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "title": "Hidratação Facial",
+    "category": "Facial",
+    "imageUrl": "/images/catalogo/hidratacao-facial.png",
+    "indication": "Pele ressecada, sem viço ou com aspecto cansado.",
+    "link": "/catalogo#hidratacao-facial",
+    "procedure": "hidratacao-facial",
+    "description": "Reposição de água e nutrientes essenciais, melhorando a elasticidade e o brilho natural da pele. Uso de máscaras hidratantes, séruns e massagens suaves.",
+    "price": "150,00",
+    "duration": "Sessão de 1h" 
+  },
+  {
+    "id": 2,
+    "title": "Limpeza de Pele",
+    "category": "Facial",
+    "imageUrl": "/images/catalogo/limpeza-pele.png",
+    "indication": "Controle de oleosidade, acne e remoção de cravos.",
+    "link": "/catalogo#limpeza-pele",
+    "procedure": "limpeza-de-pele",
+    "description": "Remove impurezas, células mortas e desobstrui os poros. Inclui limpeza, esfoliação, extração de cravos, máscara calmante e hidratação.",
+    "price": "120,00",
+    "duration": "Sessão de 1h"
+  },
+  {
+    "id": 3,
+    "title": "Revitalização Facial com Vitamina C",
+    "category": "Facial",
+    "imageUrl": "/images/catalogo/revitalizacao-facial.png",
+    "indication": "Pele opaca, manchas claras ou sinais iniciais de envelhecimento.",
+    "link": "/catalogo#revitalizacao-facial-com-vitamina-c",
+    "procedure": "revitalizacao-facial-com-vitamina-c",
+    "description": "Aplicação tópica de vitamina C para ação esfoliante, clareadora, uniformização do tom da pele e estímulo natural à produção de colágeno.",
+    "price": "180,00",
+    "duration": "Sessão de 1h"
+  },
+  {
+    "id": 4,
+    "title": "Drenagem Linfática",
+    "category": "Corporal",
+    "imageUrl": "/images/catalogo/drenagem-linfatica.png",
+    "indication": "Retenção de líquidos, inchaço e melhora da circulação.",
+    "link": "/catalogo#drenagem-linfatica",
+    "procedure": "drenagem-linfatica",
+    "description": "Técnica de massagem com movimentos rítmicos suaves que estimulam o sistema linfático, auxiliando na eliminação de toxinas e redução de inchaços.",
+    "price": "165,00",
+    "duration": "Sessão de 1h"
+  },
+  {
+    "id": 5,
+    "title": "Esfoliação Corporal",
+    "category": "Corporal",
+    "imageUrl": "/images/catalogo/esfoliacao-corporal.png",
+    "indication": "Renovação da pele e preparação para outros tratamentos (hidratação e bronzeamento).",
+    "link": "/catalogo#esfoliacao-corporal",
+    "procedure": "esfoliacao-corporal",
+    "description": "Remove células mortas e impurezas, deixando a pele mais macia, uniforme e com aparência saudável. Geralmente realizada com creme esfoliante e partículas naturais.",
+    "price": "100,00",
+    "duration": "Sessão de 1h"
+  },
+  {
+    "id": 6,
+    "title": "Massagem Relaxante",
+    "category": "Corporal",
+    "imageUrl": "/images/catalogo/massagem-relaxante.png",
+    "indication": "Estresse, tensão muscular e fadiga física.",
+    "link": "/catalogo#massagem-relaxante",
+    "procedure": "massagem-relaxante",
+    "description": "Alivia tensões com movimentos suaves e contínuos, promovendo relaxamento, bem-estar e melhora da qualidade do sono.",
+    "price": "165,00",
+    "duration": "Sessão de 30min"
+  },
+  {
+    "id": 7,
+    "title": "Acupuntura",
+    "category": "Terapia",
+    "imageUrl": "/images/catalogo/acupuntura.png",
+    "indication": "Alívio de dores, estresse, ansiedade, insônia e problemas musculares.",
+    "link": "/catalogo#acupuntura",
+    "procedure": "acupuntura",
+    "description": "Técnica da medicina tradicional chinesa que utiliza agulhas finas em pontos específicos para estimular o equilíbrio energético e melhorar funções do corpo.",
+    "price": "200,00",
+    "duration": "Sessão de 1h"
+  },
+  {
+    "id": 8,
+    "title": "Massoterapia",
+    "category": "Terapia",
+    "imageUrl": "/images/catalogo/massoterapia.png",
+    "indication": "Relaxamento muscular, alívio de tensões, melhora da circulação e bem-estar físico e mental.",
+    "link": "/catalogo#massoterapia",
+    "procedure": "massoterapia",
+    "description": "Conjunto de técnicas de massagem que atuam terapeuticamente no corpo. Pode incluir métodos relaxantes, terapêuticos, modeladores ou esportivos.",
+    "price": "120,00",
+    "duration": "Sessão de 1h"
+  },
+  {
+    "id": 9,
+    "title": "Ventosaterapia",
+    "category": "Terapia",
+    "imageUrl": "/images/catalogo/ventosaterapia.png",
+    "indication": "Dores musculares, pontos de tensão, celulite, retenção de líquidos e osteoartrite.",
+    "link": "/catalogo#ventosaterapia",
+    "procedure": "ventosaterapia",
+    "description": "Ajuda a aliviar dores, reduzir tensões, estimular a eliminação de toxinas e pode melhorar o aspecto da pele.",
+    "price": "220,00",
+    "duration": "Sessão de 1h"
+  }
+]

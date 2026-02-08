@@ -82,7 +82,7 @@ const CustomDatePicker = ({ selectedDate, onDateChange, disabledDates = [] }) =>
         const offset = firstDay;
         for (let i = 0; i < offset; i++) {
             days.push(
-                <div key={`empty-${i}`} className="day d-inline-block text-center text-forest-green" style={{ width: 'calc(100%/7)' }} />
+                <div key={`empty-${i}`} className="d-inline-block day text-center text-forest-green" style={{ width: 'calc(100%/7)' }} />
             );
         }
 
