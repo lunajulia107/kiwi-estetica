@@ -5,8 +5,8 @@ import { Routes, Route, Outlet } from "react-router-dom";
 import Header from "./components/layout/Header.jsx";
 import Footer from "./components/layout/Footer.jsx";
 
-import AdminHeader from "./components/layout-admin/AdminHeader.jsx";
-import AdminSidebar from "./components/layout-admin/AdminSidebar.jsx";
+import AdminHeader from "./components/admin/AdminHeader.jsx";
+import AdminSidebar from "./components/admin/AdminSidebar.jsx";
 
 // Páginas públicas
 import Home from "./pages/Home.jsx";
