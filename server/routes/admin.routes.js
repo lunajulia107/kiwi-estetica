@@ -106,7 +106,7 @@ router.get('/dashboard', auth, async (req, res) => {
             totalToday,
             pendingAppointments: pending,
             confirmedAppointments: confirmed,
-            agendamentosCategoria: {
+            categoryAppointments: {
                 labels: fixedCategories.map(c => c.charAt(0).toUpperCase() + c.slice(1)),
                 values: countsCategories
             },

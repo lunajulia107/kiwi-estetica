@@ -41,21 +41,21 @@ const Dashboard = () => {
     if (error) return <p>Erro: {error}</p>;
 
     const {
-        proximaCliente,
-        totalHoje,
-        agendamentosPendentes,
-        agendamentosConfirmados,
-        agendamentosCategoria,
-        topProcedimentos
+        nextClient,
+        totalToday,
+        pendingAppointments,
+        confirmedAppointments,
+        categoryAppointments,
+        topProcedures
     } = dashboardData;
 
     const dataDoughnut = {
-        labels: agendamentosCategoria.labels,
+        labels: categoryAppointments.labels,
         datasets: [
             {
                 label: 'Agendamentos',
-                data: agendamentosCategoria.valores,
-                backgroundColor: ['#97C249', '#614C33', '#0A3521'], 
+                data: categoryAppointments.values,
+                backgroundColor: ['#97C249', '#614C33', '#0A3521'],
                 borderWidth: 0,
             },
         ],
@@ -77,11 +77,11 @@ const Dashboard = () => {
     };
 
     const dataBar = {
-        labels: topProcedimentos.labels,
+        labels: topProcedures.labels,
         datasets: [
             {
                 label: 'Agendamentos',
-                data: topProcedimentos.valores,
+                data: topProcedures.values,
                 backgroundColor: '#97C249',
                 borderRadius: 4,
             },
@@ -109,31 +109,31 @@ const Dashboard = () => {
 
     return (
         <>
-            <section className="bg-forest-green ps-4 pe-4 ps-lg-0 pe-lg-0 py-5 rounded-4 text-light">
+            <section className="bg-forest-green pe-4 pe-lg-0 ps-4 ps-lg-0 py-5 rounded-4 text-light">
                 <div className="container-fluid">
                     <div className="align-items-center row">
                         <div className="col-12 col-xxl-2 mb-4 mb-xl-0">
-                            <h3 className="fw-bold mb-0 ps-lg-3">{proximaCliente || '—'}</h3>
+                            <h3 className="fw-bold mb-0 ps-lg-3">{nextClient || '—'}</h3>
                             <p className="mb-0 ps-lg-3 small">Próxima cliente</p>
                         </div>
 
                         <div className="border-light border-opacity-10 border-start col-12 col-xl-3 col-xxl-2 mb-4 mb-xl-0">
                             <h2 className="fw-bold mb-0 ps-lg-3">
-                                {totalHoje ?? 0}<span className="text-lime-green">C</span>
+                                {totalToday ?? 0}<span className="text-lime-green">C</span>
                             </h2>
                             <p className="mb-0 ps-lg-3 small">Total de hoje</p>
                         </div>
 
                         <div className="border-light border-opacity-10 border-start col-12 col-xl-3 col-xxl-2 mb-4 mb-xl-0">
                             <h2 className="fw-bold mb-0 ps-lg-3">
-                                {agendamentosPendentes ?? 0}<span className="text-lime-green">A</span>
+                                {pendingAppointments ?? 0}<span className="text-lime-green">A</span>
                             </h2>
                             <p className="mb-0 ps-lg-3 small">Pendentes</p>
                         </div>
 
                         <div className="border-light border-opacity-25 border-start col-12 col-xl-3 col-xxl-2 mb-4 mb-xl-0">
                             <h2 className="fw-bold mb-0 ps-lg-3">
-                                {agendamentosConfirmados ?? 0}<span className="text-lime-green">C</span>
+                                {confirmedAppointments ?? 0}<span className="text-lime-green">C</span>
                             </h2>
                             <p className="mb-0 ps-lg-3 small">Confirmados</p>
                         </div>
@@ -158,6 +158,7 @@ const Dashboard = () => {
                             <Bar data={dataBar} options={optionsBar} />
                         </div>
                     </article>
+
                     <article className="col-12 col-xl-4 pe-0">
                         <div className="bg-white p-4 rounded-4">
                             <p className="fw-semibold mb-4">Resumo por categoria</p>

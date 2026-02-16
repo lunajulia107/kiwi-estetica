@@ -4,9 +4,7 @@ import { motion } from "framer-motion";
 import servicesData from "../json/servicesData.json"; // JSON com procedimentos
 import { FlipCard } from "../components/ServiceFlipCard.jsx";
 import CTASection from "../components/CTASection.jsx";
-
-
-// Criando a lista de categorias únicas
+ 
 const uniqueCategories = [
   "Todos",
   ...Array.from(new Set(servicesData.map((proc) => proc.category))),
@@ -77,19 +75,19 @@ const Catalogo = () => {
         }
         text="Antes do tratamento, informe seu histórico de saúde, alergias ou uso de medicação. Evite sol intenso e produtos irritantes na região a ser tratada por 2 dias antes."
         content={
-          <ul className="d-flex flex-wrap gap-3 justify-content-start justify-content-xl-center m-0 p-0">
+          <div className="d-flex flex-wrap gap-3 justify-content-start justify-content-xl-center m-0 p-0">
             {[
               { src: "./images/certificados/abihpec.png", alt: "Certificado ABIHPEC", label: "ABIHPEC" },
               { src: "./images/certificados/anvisa.png", alt: "Certificado ANVISA", label: "ANVISA" },
               { src: "./images/certificados/crueltyfree.png", alt: "Certificado Cruelty Free", label: "Cruelty Free" },
               { src: "./images/certificados/iso9001.png", alt: "Certificado ISO 9001", label: "ISO 9001" }
             ].map((cert, index) => (
-              <li key={index} className="align-items-center bg-white d-flex flex-column justify-content-center p-3 rounded-4 text-center" style={{ width: "140px", height: "100px" }}>
+              <div key={index} className="align-items-center bg-white d-flex flex-column justify-content-center p-3 rounded-4 text-center" style={{ width: "140px", height: "100px" }}>
                 <img src={cert.src} alt={cert.alt} className="img-fluid mb-2" style={{ maxHeight: "45px", objectFit: "contain" }} />
                 <small className="fw-semibold text-forest-green">{cert.label}</small>
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         }
       /> 
     </>

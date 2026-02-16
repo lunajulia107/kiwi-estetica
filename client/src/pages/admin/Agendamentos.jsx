@@ -1,138 +1,157 @@
-import React, { useEffect, useState, useRef } from 'react';
-import SearchBar from '../../components/SearchBar'; 
- 
-const Agendamentos = () => {
-  const [agendamentos, setAgendamentos] = useState([]);
-  const [agendamentoSelecionado, setAgendamentoSelecionado] = useState(null);
-  const [statusFiltro, setStatusFiltro] = useState("todos");
-  const [busca, setBusca] = useState("");
-  const [paginaAtual, setPaginaAtual] = useState(1);
-  const itensPorPagina = 5;
+import React, { useEffect, useRef, useState } from "react";
+import SearchBar from "../../components/SearchBar";
+
+const Appointments = () => {
+  const [appointments, setAppointments] = useState([]);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [statusFilter, setStatusFilter] = useState("todos");
+  const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [error, setError] = useState(null);
+
+  const itemsPerPage = 5;
   const modalRef = useRef();
-
+ 
   useEffect(() => {
-    const carregarAgendamentos = async () => {
+    const fetchAppointments = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/admin/agendamentos', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-            'Content-Type': 'application/json'
-          }
-        });
+        const token = localStorage.getItem("token");
+        if (!token) {
+          setError("Usuário não autenticado");
+          return;
+        }
 
-        const resultado = await response.json();
-        setAgendamentos(response.ok && Array.isArray(resultado.dados) ? resultado.dados : []);
-      } catch {
-        setAgendamentos([]);
+        const response = await fetch(
+          "http://localhost:5000/api/admin/agendamentos",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.message || "Erro ao buscar dados");
+        }
+
+        setAppointments(Array.isArray(result.data) ? result.data : []);
+      } catch (err) { 
+        setError(err.message);
+        setAppointments([]);
       }
     };
 
-    carregarAgendamentos();
+    fetchAppointments();
   }, []);
-
-  const abrirModal = (agendamento) => {
-    setAgendamentoSelecionado(agendamento);
+ 
+  const openModal = (appointment) => {
+    setSelectedAppointment(appointment);
     const modal = new window.bootstrap.Modal(modalRef.current);
     modal.show();
   };
-
-  const confirmarAgendamento = async () => {
-    const { id } = agendamentoSelecionado;
+ 
+  const confirmAppointment = async () => {
+    const { id } = selectedAppointment;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/agendamentos/${id}/confirmar`, {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-          'Content-Type': 'application/json'
+      const response = await fetch(
+        `http://localhost:5000/api/admin/agendamentos/${id}/confirmar`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
         }
-      });
+      );
 
       const data = await response.json();
+      if (!response.ok) throw new Error(data.message);
 
-      if (response.ok) {
-        setAgendamentos(prev =>
-          prev.map(agt => agt.id === id ? { ...agt, status: 'confirmado' } : agt)
-        );
-        window.bootstrap.Modal.getInstance(modalRef.current).hide();
-      } else {
-        alert(data.mensagem || 'Erro ao confirmar agendamento.');
-      }
-    } catch {
-      alert('Erro inesperado. Tente novamente.');
+      setAppointments((prev) =>
+        prev.map((apt) =>
+          apt.id === id ? { ...apt, status: "confirmado" } : apt
+        )
+      );
+
+      window.bootstrap.Modal.getInstance(modalRef.current).hide();
+    } catch (err) {
+      alert(err.message || "Erro ao confirmar agendamento");
     }
-  };
+  }; 
+ 
+  const filteredAppointments = appointments.filter((apt) => {
+    const statusMatch =
+      statusFilter === "todos" || apt.status === statusFilter;
 
-  const enviarMensagemWhatsApp = () => {
-    const celular = agendamentoSelecionado?.celular?.replace(/\D/g, '');
-    if (!celular) return alert('Celular não disponível para este cliente.');
+    const searchMatch = apt.name
+      .toLowerCase()
+      .includes(search.toLowerCase());
 
-    const mensagem = `Olá ${agendamentoSelecionado.nome}, seu agendamento para *${agendamentoSelecionado.procedimento}* está confirmado para o dia *${agendamentoSelecionado.data}* às *${agendamentoSelecionado.horario}*.`;
-    const url = `https://wa.me/55${celular}?text=${encodeURIComponent(mensagem)}`;
-    window.open(url, '_blank');
-  };
-
-  // Filtra pelos filtros e busca
-  const agendamentosFiltrados = agendamentos.filter(agt => {
-    const statusOk = statusFiltro === "todos" || agt.status === statusFiltro;
-    const buscaOk = agt.nome.toLowerCase().includes(busca.toLowerCase());
-    return statusOk && buscaOk;
+    return statusMatch && searchMatch;
   });
+ 
+  const totalPages = Math.ceil(filteredAppointments.length / itemsPerPage);
+  const start = (currentPage - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  const paginatedAppointments = filteredAppointments.slice(start, end);
 
-  // Paginação
-  const totalPaginas = Math.ceil(agendamentosFiltrados.length / itensPorPagina);
-  const inicio = (paginaAtual - 1) * itensPorPagina;
-  const fim = inicio + itensPorPagina;
-  const agendamentosPagina = agendamentosFiltrados.slice(inicio, fim);
-
-  const irParaPagina = (num) => {
-    if (num < 1 || num > totalPaginas) return;
-    setPaginaAtual(num);
+  const goToPage = (num) => {
+    if (num < 1 || num > totalPages) return;
+    setCurrentPage(num);
   };
 
-  // Reset pagina ao mudar filtro/busca
-  React.useEffect(() => {
-    setPaginaAtual(1);
-  }, [statusFiltro, busca]);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [statusFilter, search]);
+ 
+  if (error) return <p className="text-danger">Erro: {error}</p>;
 
   return (
     <>
       <h3 className="fw-bold mb-3">Agendamentos</h3>
 
-      {/* Filtros */}
+      {/* FILTROS */}
       <div className="align-items-center d-flex flex-wrap gap-3 justify-content-between mb-3">
-        <SearchBar busca={busca} setBusca={setBusca} />
+        <SearchBar busca={search} setBusca={setSearch} />
 
-        <div className="align-items-center d-flex flex-wrap gap-3">
-          <label className="form-label" htmlFor="">Filtrar por</label>
+        <div className="align-items-center d-flex gap-3">
+          <label>Filtrar por</label>
           <select
             className="form-select w-auto"
-            onChange={(e) => setStatusFiltro(e.target.value)}
-            value={statusFiltro}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            value={statusFilter}
           >
             <option value="todos">Todos</option>
             <option value="pendente">Pendentes</option>
             <option value="confirmado">Confirmados</option>
-          </select> 
-        </div> 
+          </select>
+        </div>
       </div>
 
-      {/* Mobile: Cards */}
+      {/* MOBILE */}
       <div className="d-md-none">
-        {agendamentosPagina.map(agt => (
-          <div className="card mb-3 shadow-sm" key={agt.id}>
+        {paginatedAppointments.map((apt) => (
+          <div className="border-0 card mb-3" key={apt.id}>
             <div className="card-body">
-              <h5 className="card-title">{agt.nome}</h5>
-              <p><strong>Data:</strong> {agt.data} às {agt.horario}</p>
-              <p><strong>Procedimento:</strong> {agt.procedimento}</p>
+              <h5 className="mb-2">{apt.name}</h5>
+              <p><strong className="fw-medium">Data:</strong> {apt?.date && new Date(apt.date).toLocaleDateString("pt-BR")} às {apt.time}</p>
+              <p><strong className="fw-medium">Procedimento:</strong> {apt.procedure}</p>
               <p>
-                <strong>Status:</strong>{" "}
-                <span className={`badge bg-${agt.status === 'pendente' ? 'warning' : 'success'}`}>
-                  {agt.status}
+                <strong className="fw-medium">Status:</strong>{" "}
+                <span className={`badge bg-${apt.status === "pendente" ? "warning" : "success"} fw-medium`}>
+                  {apt.status.charAt(0).toUpperCase() + apt.status.slice(1)}
                 </span>
               </p>
-              {agt.status === 'pendente' && (
-                <button className="btn btn-sm btn-success" onClick={() => abrirModal(agt)}>
+
+              {apt.status === "pendente" && (
+                <button
+                  className="btn btn-sm btn-lime-green text-white mt-4"
+                  onClick={() => openModal(apt)} type="button"
+                >
                   Confirmar
                 </button>
               )}
@@ -141,8 +160,8 @@ const Agendamentos = () => {
         ))}
       </div>
 
-      {/* Desktop: Tabela */}
-      <div className="bg-white d-none d-md-block p-3 rounded-4 table-responsive">
+      {/* TABELA DESKTOP */}
+      <div className="bg-white d-md-block d-none p-3 rounded-4 table-responsive">
         <table className="table table-bordered table-hover">
           <thead className="table-light">
             <tr>
@@ -154,21 +173,25 @@ const Agendamentos = () => {
               <th>Ação</th>
             </tr>
           </thead>
+
           <tbody>
-            {agendamentosPagina.map(agt => (
-              <tr key={agt.id}>
-                <td>{agt.nome}</td>
-                <td>{agt.data}</td>
-                <td>{agt.horario}</td>
-                <td>{agt.procedimento}</td>
+            {paginatedAppointments.map((apt) => (
+              <tr key={apt.id}>
+                <td>{apt.name}</td>
+                <td>{apt?.date && new Date(apt.date).toLocaleDateString("pt-BR")}</td>
+                <td>{apt.time}</td>
+                <td>{apt.procedure}</td>
                 <td>
-                  <span className={`badge bg-${agt.status === 'pendente' ? 'warning' : 'success'}`}>
-                    {agt.status}
+                  <span className={`badge bg-${apt.status === "pendente" ? "warning" : "success"} fw-medium`}>
+                    {apt.status.charAt(0).toUpperCase() + apt.status.slice(1)}
                   </span>
                 </td>
                 <td>
-                  {agt.status === 'pendente' && (
-                    <button className="btn btn-sm btn-success" onClick={() => abrirModal(agt)}>
+                  {apt.status === "pendente" && (
+                    <button
+                      className="btn btn-sm btn-lime-green text-white"
+                      onClick={() => openModal(apt)} type="button"
+                    >
                       Confirmar
                     </button>
                   )}
@@ -179,56 +202,69 @@ const Agendamentos = () => {
         </table>
       </div>
 
-      {/* Paginação */}
-      <nav aria-label="Paginação" className="d-flex justify-content-end mt-3">
-        <ul className="pagination">
-          <li className={`page-item ${paginaAtual === 1 ? 'disabled' : ''}`}>
-            <button className="page-link" onClick={() => irParaPagina(paginaAtual - 1)}>Anterior</button>
-          </li>
+      {/* PAGINAÇÃO */}
+      {totalPages > 1 && (
+        <nav className="d-flex justify-content-end mt-3">
+          <ul className="pagination">
+            <li className={`page-item ${currentPage === 1 && "disabled"}`}>
+              <button className="page-link" onClick={() => goToPage(currentPage - 1)}>
+                Anterior
+              </button>
+            </li>
 
-          {[...Array(totalPaginas)].map((_, idx) => {
-            const num = idx + 1;
-            return (
-              <li key={num} className={`page-item ${paginaAtual === num ? 'active' : ''}`}>
-                <button className="page-link" onClick={() => irParaPagina(num)}>{num}</button>
-              </li>
-            )
-          })}
+            {[...Array(totalPages)].map((_, i) => {
+              const page = i + 1;
+              return (
+                <li key={page} className={`page-item ${currentPage === page && "active"}`}>
+                  <button className="page-link" onClick={() => goToPage(page)} type="button">
+                    {page}
+                  </button>
+                </li>
+              );
+            })}
 
-          <li className={`page-item ${paginaAtual === totalPaginas ? 'disabled' : ''}`}>
-            <button className="page-link" onClick={() => irParaPagina(paginaAtual + 1)}>Próximo</button>
-          </li>
-        </ul>
-      </nav>
+            <li className={`page-item ${currentPage === totalPages && "disabled"}`}>
+              <button className="page-link" onClick={() => goToPage(currentPage + 1)}>
+                Próximo
+              </button>
+            </li>
+          </ul>
+        </nav>
+      )}
 
-      {/* Modal */}
+      {/* MODAL */}
       <div
         aria-hidden="true"
-        aria-labelledby="modalConfirmLabel"
         className="modal fade"
         ref={modalRef}
         tabIndex="-1"
       >
         <div className="modal-dialog">
           <div className="modal-content">
-            {agendamentoSelecionado && (
+            {selectedAppointment && (
               <>
                 <div className="modal-header">
-                  <h5 className="modal-title">Confirmar Agendamento</h5>
-                  <button className="btn-close" data-bs-dismiss="modal" type="button"></button>
+                  <h5 className="modal-title">Agendamento</h5>
+                  <button className="btn-close" data-bs-dismiss="modal" />
                 </div>
+
                 <div className="modal-body">
-                  <p><strong>Cliente:</strong> {agendamentoSelecionado.nome}</p>
-                  <p><strong>Procedimento:</strong> {agendamentoSelecionado.procedimento}</p>
-                  <p><strong>Data:</strong> {agendamentoSelecionado.data} às {agendamentoSelecionado.horario}</p>
-                  <p>Deseja confirmar este agendamento?</p>
+                  <p> 
+                    <strong className="fw-medium">Cliente:</strong> {selectedAppointment.name} <br />
+                    <strong className="fw-medium">Procedimento:</strong> {selectedAppointment.procedure} <br />
+                    <strong className="fw-medium">Data:</strong> 
+                    {selectedAppointment?.date && new Date(selectedAppointment.date).toLocaleDateString("pt-BR")} às {selectedAppointment.time}
+                  </p>  
                 </div>
+
                 <div className="modal-footer">
-                  <button className="btn btn-secondary" data-bs-dismiss="modal" type="button">Cancelar</button>
-                  <button className="btn btn-success" onClick={confirmarAgendamento} type="button">Confirmar</button>
-                  <button className="btn btn-success ms-2" onClick={enviarMensagemWhatsApp} type="button">
-                    Confirmar e Enviar WhatsApp
+                  <button className="btn btn-light" data-bs-dismiss="modal" type="button">
+                    Cancelar
                   </button>
+
+                  <button className="btn btn-lime-green text-white" onClick={confirmAppointment} type="button">
+                    Confirmar
+                  </button> 
                 </div>
               </>
             )}
@@ -239,4 +275,4 @@ const Agendamentos = () => {
   );
 };
 
-export default Agendamentos;
+export default Appointments;

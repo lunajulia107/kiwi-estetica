@@ -52,8 +52,8 @@ router.post('/', async (req, res) => {
             status: 'pendente'
         });
 
-        const numeroProfissional = process.env.WHATSAPP_PROFISSIONAL_NUMBER;
-        const mensagem = `Olá, tenho um agendamento:
+        const professionalNumber = process.env.WHATSAPP_PROFESSIONAL_NUMBER;
+        const message = `Olá, tenho um agendamento:
                             Nome: ${name}
                             Celular: ${phone}
                             Categoria: ${category}
@@ -61,7 +61,7 @@ router.post('/', async (req, res) => {
                             Data: ${date}
                             Horário: ${time}`;
 
-        const urlWhatsApp = `https://wa.me/${numeroProfissional}?text=${encodeURIComponent(mensagem)}`;
+        const urlWhatsApp = `https://wa.me/${professionalNumber}?text=${encodeURIComponent(message)}`;
 
         res.status(201).json({
             message: 'Agendamento registrado como pendente. Por favor, confirme via WhatsApp.',

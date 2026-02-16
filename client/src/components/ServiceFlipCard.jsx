@@ -151,7 +151,7 @@ const FlipCard = ({ service }) => {
             )}
             <h4 className="h5 mt-2">Descrição</h4>
             <p className="flex-grow-1 mt-2">{service.description}</p>
-            <small className="mt-2 opacity-75 text-center">
+            <small className="opacity-75 text-center">
               Clique para voltar
             </small>
           </article>

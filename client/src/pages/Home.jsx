@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 
 import ActionButton from "../components/ActionButton.jsx";
+import IconRow from "../components/IconRow.jsx";
 import InfoSection from "../components/InfoSection.jsx";
 import ServicesCarousel from "../components/home/ServicesCarousel.jsx";
 import CustomersCarousel from "../components/home/CustomersCarousel.jsx";
@@ -71,14 +72,8 @@ const Home = () => {
               <p>Agende seu momento e valorize-se ainda mais com a gente.</p>
 
               <address className="d-flex flex-column gap-2">
-                <div className="align-items-center d-flex gap-2">
-                  <i className="bi bi-geo-alt-fill"></i>
-                  <p>Centro Comercial, 138 - Alphaville, SP</p>
-                </div>
-                <div className="align-items-center d-flex gap-2">
-                  <i className="bi bi-clock-fill"></i>
-                  <p>Seg a Sáb: 9h às 18h</p>
-                </div>
+                <IconRow icon="bi bi-geo-alt-fill">Centro Comercial, 138 - Alphaville, SP</IconRow>
+                <IconRow icon="bi bi-clock-fill">Seg a Sáb: 9h às 18h</IconRow>  
               </address>
 
               <div className="d-flex flex-column flex-sm-row gap-2 justify-content-center justify-content-lg-start mt-3"> 
