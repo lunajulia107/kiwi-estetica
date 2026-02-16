@@ -8,7 +8,8 @@ const ServiceCard = ({
   className,
   maxHeight = "525px",
   minHeight = "300px",
-  linkText = "Mais detalhes",
+  pageLink = "catalogo",
+  linkText = "Mais detalhes"
 }) => {
   return (
     <motion.article
@@ -68,21 +69,19 @@ const ServiceCard = ({
             )}
           </div>
 
-          {service.link && (
-            <a
-              className="fw-medium text-decoration-none text-lime-green"
-              href={service.link}
-            >
-              {linkText}
-            </a>
-          )}
+          <a
+            className="fw-medium text-decoration-none text-lime-green"
+            href={`/${pageLink}#${service.category?.toLowerCase().replace(/\s+/g,"-") || ""}#${service.procedure || ""}`} 
+          >
+            {linkText}
+          </a>
         </footer>
       </div>
     </motion.article>
   );
 };
 
-const FlipCard = ({ service }) => {
+const FlipCard = ({ service, pageLink, linkText }) => {
   const [flipped, setFlipped] = useState(false);
 
   return (
@@ -118,7 +117,7 @@ const FlipCard = ({ service }) => {
             width: "100%",
           }}
         >
-          <ServiceCard className="h-100" service={service} />
+          <ServiceCard className="h-100" service={service} pageLink={pageLink} linkText={linkText} />
         </div>
 
         {/* BACK */}

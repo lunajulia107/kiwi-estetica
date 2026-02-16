@@ -78,10 +78,10 @@ function ServicesCarousel() {
         <div className="flex-nowrap row">
           {getVisibleServices()
             .slice(0, 6)
-            .map(({ id, title, category, imageUrl, indication, link }) => (
+            .map(({ id, title, category, imageUrl, indication, procedure }) => (
               <ServiceCard
                 key={id}
-                service={{ id, title, category, imageUrl, indication, link }}
+                service={{ id, title, category, imageUrl, indication, procedure }}
                 className="col-12 col-lg-4 col-md-6"
                 style={{ transition: "all 0.5s ease" }} 
               />

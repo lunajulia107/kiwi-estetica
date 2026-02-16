@@ -12,9 +12,9 @@ const Footer = () => {
 
   // Links de Tratamentos/Serviços  
   const serviceLinks = [
-    { name: "Cuidados faciais", path: "/catalogo#faciais" },
-    { name: "Cuidados corporais", path: "/catalogo#corporais" },
-    { name: "Terapias", path: "/catalogo#terapias" },
+    { name: "Cuidados faciais", path: "/catalogo#facial" },
+    { name: "Cuidados corporais", path: "/catalogo#corporal" },
+    { name: "Terapias", path: "/catalogo#terapia" },
   ];
 
   const socialLinks = [

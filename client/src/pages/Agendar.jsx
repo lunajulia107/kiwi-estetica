@@ -32,16 +32,51 @@ const Agendar = () => {
 
   const proceduresByCategory = {
     "Procedimentos Corporais": [
-      "Carboxiterapia","Drenagem Linfática","Lipocavitação","Massagem Modeladora",
-      "Massagem Nutritiva e Esfoliante","Massagem Relaxante","Protocolo Redux Duo","Tratamento de Manchas",
+      "Drenagem Linfática","Esfoliação Corporal","Massagem Relaxante"
     ],
     "Procedimentos Faciais": [
-      "Limpeza de pele duo","Limpeza de pele normal","Massofilaxia facial","Peelings",
-      "Revitalização e nutrição facial","Tratamento para manchas, lábios e olhos",
-      "Tratamento rejuvenescedor","Tratamentos com LED Terapêutico",
+      "Hidratação Facial","Limpeza de Pele","Revitalização Facial com Vitamina C"
     ],
-    "Terapias Complementares": ["Acupuntura","Cromoterapia"],
+    "Terapias Complementares": ["Acupuntura","Cromoterapia", "Ventosaterapia"],
   };
+
+  useEffect(() => {
+    const handleHash = () => {
+      if (!window.location.hash) return;
+
+      const parts = window.location.hash.split("#");
+      const slug = parts[2]; // pega só o procedimento
+
+      if (!slug) return;
+
+      const slugify = (text) =>
+        text
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/\s+/g, "-");
+
+      for (const category in proceduresByCategory) {
+        const found = proceduresByCategory[category].find(
+          (proc) => slugify(proc) === slug
+        );
+
+        if (found) {
+          setFormData((prev) => ({
+            ...prev,
+            category,
+            procedure: found,
+          }));
+          return;
+        }
+      }
+    };
+
+    handleHash(); // roda ao carregar
+
+    window.addEventListener("hashchange", handleHash);
+    return () => window.removeEventListener("hashchange", handleHash);
+  }, []); 
 
   const applyPhoneMask = (value) => {
     value = value.replace(/\D/g, "");
