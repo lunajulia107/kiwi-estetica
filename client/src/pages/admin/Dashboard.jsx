@@ -109,9 +109,9 @@ const Dashboard = () => {
 
     return (
         <>
-            <section className="bg-forest-green pe-4 pe-lg-0 ps-4 ps-lg-0 py-5 rounded-4 text-light">
+            <section className="bg-forest-green pe-4 pe-xxl-0 ps-4 ps-xxl-0 py-5 rounded-4 text-light">
                 <div className="container-fluid">
-                    <div className="align-items-center row">
+                     <div className="align-items-center row">
                         <div className="col-12 col-xxl-2 mb-4 mb-xl-0">
                             <h3 className="fw-bold mb-0 ps-lg-3">{nextClient || '—'}</h3>
                             <p className="mb-0 ps-lg-3 small">Próxima cliente</p>
@@ -152,14 +152,14 @@ const Dashboard = () => {
 
             <div className="container-fluid mt-4">
                 <div className="row">
-                    <article className="col-12 col-xl-8 mb-4 ps-0">
+                    <article className="col-12 col-xxl-8 mb-4 ps-0">
                         <div className="bg-white p-4 rounded-4">
                             <p className="fw-semibold mb-4">Top 5 procedimentos</p>
                             <Bar data={dataBar} options={optionsBar} />
                         </div>
                     </article>
 
-                    <article className="col-12 col-xl-4 pe-0">
+                    <article className="col-12 col-xxl-4 pe-0">
                         <div className="bg-white p-4 rounded-4">
                             <p className="fw-semibold mb-4">Resumo por categoria</p>
                             <div className="align-items-center d-flex flex-column">

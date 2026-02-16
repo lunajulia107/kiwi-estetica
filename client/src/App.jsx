@@ -46,13 +46,13 @@ const AdminLayout = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className={`col-12 col-lg-2 p-0`}>
+        <div className={`col-12 col-xxl-2 p-0`}>
           {/* Sidebar */}
           <AdminSidebar />
         </div>
         
         {/* Conteúdo principal */}
-        <div className={`col-12 col-lg-10 p-0`}>
+        <div className={`col-12 col-xxl-10 p-0`}>
           <AdminHeader />
 
           <main className="p-4">

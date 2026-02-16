@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 const AdminSidebar = () => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 991);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1400);
   const [usuario, setUsuario] = useState({ nome: '', cargo: '' });
   const navigate = useNavigate();
 
@@ -16,7 +16,7 @@ const AdminSidebar = () => {
   };
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 991);
+    const handleResize = () => setIsMobile(window.innerWidth < 1400);
     window.addEventListener("resize", handleResize);
  
     const searchUser = async () => {

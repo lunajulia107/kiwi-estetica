@@ -53,7 +53,7 @@ footer {
 }
 
 aside { 
-    @media (min-width: 991px) {
+    @media (min-width: 1400px) {
         position: fixed;
         width: inherit;
     }
@@ -127,7 +127,7 @@ a.text-lime-green {
       left: -80px;
     }
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1400px) {
       display: none;
     }
   }
@@ -147,27 +147,41 @@ a.text-lime-green {
 
     th span {
         font-weight: 600;
-    }
-
-    .active>.page-link, .page-link.active {
-        background-color: #0A3521;
-        border-color: #0A3521;
-    }
+    } 
 
     .dt-length, 
     .dt-search {
         display: flex;
+    } 
+}
+
+.input-group {
+    @media (max-width: 768px) {
+        width: 100% !important;
+    }  
+}
+
+.pagination .active .page-link {
+    background-color: map-get($colors, "forest-green");
+    border-color: map-get($colors, "forest-green"); 
+}
+
+.page-link {
+    color: map-get($colors, "forest-green");    
+
+    &:hover {
+        color: map-get($colors, "forest-green"); 
     }
 }
 
 .login-image {
-    @media (max-width: 1200px) {
+    @media (max-width: 1400px) {
         height: 200px !important;
     } 
 }
 
 .login {
-    @media (max-width: 1200px) {
+    @media (max-width: 1400px) {
         margin-top: -72px;
         z-index: 1;
     }     

@@ -71,22 +71,22 @@ router.get('/dashboard', auth, async (req, res) => {
         });
 
         const pending = await Appointments.count({
-            where: { date: today, status: 'pendente' }
+            where: { status: 'pendente' }
         });
 
         const confirmed = await Appointments.count({
-            where: { date: today, status: 'confirmado' }
+            where: { status: 'confirmado' }
         });
 
         const fixedCategories = [
-            'procedimentos faciais',
-            'procedimentos corporais',
-            'terapias complementares'
+            'Procedimentos Faciais',
+            'Procedimentos Corporais',
+            'Terapias Complementares'
         ];
 
         const countsCategories = await Promise.all(
             fixedCategories.map(category =>
-                Appointments.count({ where: { date: today, category } })
+                Appointments.count({ where: { category } })
             )
         );
 

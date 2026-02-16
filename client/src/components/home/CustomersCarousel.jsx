@@ -101,7 +101,7 @@ function CustomersCarousel() {
                       <img
                         src={customer.image}
                         alt={customer.name}
-                        className="me-3 object-fit-cover rounded-circle"
+                        className="object-fit-cover rounded-circle"
                         style={{ filter: "brightness(75%)", height: "48px", width: "48px" }}
                       />
                     ) : (

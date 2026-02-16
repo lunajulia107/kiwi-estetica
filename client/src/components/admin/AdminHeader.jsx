@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from 'react-router-dom';
 
 const AdminHeader = () => {
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 991);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 1400);
     const [scrolled, setScrolled] = useState(false);
 
     const links = [
@@ -11,7 +11,7 @@ const AdminHeader = () => {
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 20);
-        const handleResize = () => setIsMobile(window.innerWidth < 991);
+        const handleResize = () => setIsMobile(window.innerWidth < 1400);
 
         window.addEventListener("scroll", handleScroll);
         window.addEventListener("resize", handleResize);
@@ -25,17 +25,17 @@ const AdminHeader = () => {
     return (
         <header className={`sticky-top ${scrolled ? 'shadow' : ''}`}>
             <nav
-                className={`${isMobile ? 'bg-forest-green' : 'bg-light'} navbar navbar-dark navbar-expand-lg ${scrolled ? 'p-2' : 'p-3'}`}
+                className={`${isMobile ? 'bg-forest-green' : 'bg-light'} navbar navbar-dark navbar-expand-xxl ${scrolled ? 'p-2' : 'p-3'}`}
                 aria-label="Menu principal"
             >
-                <NavLink className="d-flex d-lg-none navbar-brand" to="/">
+                    <NavLink className="d-flex d-xxl-none navbar-brand" to="/dashboard">
                         <img
                             alt="Logotipo da Kiwi Estética"
                             src="/images/logotipo.svg"
                         />
                     </NavLink>
                     <button
-                        className="d-flex d-lg-none navbar-toggler"
+                        className="d-flex d-xxl-none navbar-toggler"
                         data-bs-target="#navbarNav"
                         data-bs-toggle="collapse"
                         type="button"
@@ -48,7 +48,7 @@ const AdminHeader = () => {
 
                     {isMobile && (
                         <div className="collapse navbar-collapse" id="navbarNav">
-                            <ul className="gap-2 gap-lg-4 ms-auto navbar-nav">
+                            <ul className="gap-2 gap-xxl-4 ms-auto navbar-nav">
                                 {links.map((link) => (
                                     <li className="nav-item" key={link.id}>
                                         <NavLink
@@ -70,7 +70,7 @@ const AdminHeader = () => {
                     )}  
 
                     {/* Menu Usuário (somente desktop) */}
-                    <div className="align-items-center d-none d-lg-flex gap-3 ms-auto" style={{ height: "32px" }}></div>
+                    <div className="align-items-center d-none d-xxl-flex gap-3 ms-auto" style={{ height: "32px" }}></div>
             </nav>
         </header>
     );

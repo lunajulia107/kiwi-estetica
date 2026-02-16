@@ -627,7 +627,7 @@ footer .border-top {
   border-color: rgba(163, 197, 103, 0.1607843137) !important;
 }
 
-@media (min-width: 991px) {
+@media (min-width: 1400px) {
   aside {
     position: fixed;
     width: inherit;
@@ -701,7 +701,7 @@ a.text-lime-green:hover {
     left: -80px;
   }
 }
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
   .background-circles::before {
     display: none;
   }
@@ -720,22 +720,36 @@ a.text-lime-green:hover {
 #DataTables_Table_0_wrapper th span {
   font-weight: 600;
 }
-#DataTables_Table_0_wrapper .active > .page-link, #DataTables_Table_0_wrapper .page-link.active {
-  background-color: #0A3521;
-  border-color: #0A3521;
-}
 #DataTables_Table_0_wrapper .dt-length,
 #DataTables_Table_0_wrapper .dt-search {
   display: flex;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 768px) {
+  .input-group {
+    width: 100% !important;
+  }
+}
+
+.pagination .active .page-link {
+  background-color: #0A3521;
+  border-color: #0A3521;
+}
+
+.page-link {
+  color: #0A3521;
+}
+.page-link:hover {
+  color: #0A3521;
+}
+
+@media (max-width: 1400px) {
   .login-image {
     height: 200px !important;
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
   .login {
     margin-top: -72px;
     z-index: 1;
