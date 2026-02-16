@@ -27,8 +27,7 @@ router.post('/login', async (req, res) => {
         );
 
         res.json({ token });
-    } catch (err) {
-        console.error(err);
+    } catch (err) { 
         res.status(500).json({ mensagem: 'Erro interno no servidor' });
     }
 });
@@ -45,8 +44,7 @@ router.get('/usuario-logado', auth, async (req, res) => {
         }
 
         res.json(admin);
-    } catch (error) {
-        console.error(error);
+    } catch (error) { 
         res.status(500).json({ mensagem: 'Erro ao buscar dados do administrador' });
     }
 });
@@ -117,8 +115,7 @@ router.get('/dashboard', auth, async (req, res) => {
         };
 
         res.json(response);
-    } catch (err) { 
-        console.error(err);
+    } catch (err) {  
         res.status(500).json({ message: 'Erro ao buscar dados do dashboard' });
     }
 });
@@ -154,8 +151,7 @@ router.get('/agendamentos', auth, async (req, res) => {
             total: appointments.length,
             data: appointments
         });
-    } catch (err) { 
-        console.error(err);
+    } catch (err) {  
         res.status(500).json({
             status: 'erro',
             message: 'Erro ao buscar agendamentos'
@@ -185,8 +181,7 @@ router.put('/agendamentos/:id/confirmar', auth, async (req, res) => {
             message: 'Agendamento confirmado com sucesso',
             appointment
         });
-    } catch (err) {
-        console.error(err);
+    } catch (err) { 
         res.status(500).json({ message: 'Erro ao confirmar agendamento' });
     }
 });

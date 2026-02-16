@@ -4,9 +4,7 @@ const Appointment = require('../models/Appointments');
 const { Op } = require('sequelize');
 
 // ================= CRIAR AGENDAMENTO =================
-router.post('/', async (req, res) => {
-    console.log('Dados recebidos:', req.body);
-
+router.post('/', async (req, res) => {  
     const { name, phone, category, procedure, date, time } = req.body;
 
     if (!name || !phone || !category || !procedure || !date || !time) {
@@ -69,8 +67,7 @@ router.post('/', async (req, res) => {
             appointmentId: newAppointment.id
         });
 
-    } catch (error) {
-        console.error('Erro ao agendar:', error);
+    } catch (error) { 
         res.status(500).json({ message: 'Erro interno do servidor ao tentar agendar.' });
     }
 });
@@ -100,8 +97,7 @@ router.get('/horarios-ocupados', async (req, res) => {
 
         res.json({ horariosOcupados: occupiedHorarios });
 
-    } catch (error) {
-        console.error('Erro ao buscar horários ocupados:', error);
+    } catch (error) { 
         res.status(500).json({ message: 'Erro interno do servidor ao buscar horários.' });
     }
 });
@@ -129,8 +125,7 @@ router.get('/datas-completamente-ocupadas', async (req, res) => {
 
         res.json({ busyDates });
 
-    } catch (error) {
-        console.error('Erro ao buscar datas completamente ocupadas:', error);
+    } catch (error) { 
         res.status(500).json({ message: 'Erro interno do servidor ao buscar datas ocupadas.' });
     }
 });

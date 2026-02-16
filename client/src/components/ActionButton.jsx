@@ -15,6 +15,7 @@ const ActionButton = ({ text, to, variant = "solid", className = "" }) => {
       type="button"
       onClick={() => navigate(to)}
       className={`${baseClass} ${variantClass} ${className}`}
+      type="button"
     >
       {text}
       {variant === "solid" && (

@@ -65,8 +65,7 @@ function Login() {
           setFeedbackType("error");
         }
       })
-      .catch((error) => {
-        console.error(error);
+      .catch((error) => { 
         setFeedbackMessage("Erro ao conectar com o servidor.");
         setFeedbackType("error");
       });

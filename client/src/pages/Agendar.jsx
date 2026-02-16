@@ -353,7 +353,7 @@ const Agendar = () => {
 
                   {/* BOTÃO */}
                   <div className="d-flex flex-column justify-content-start mb-2">
-                    <button className="btn btn-lime-green pe-4 ps-4 text-white">
+                    <button className="btn btn-lime-green pe-4 ps-4 text-white" type="submit">
                       Agendar agora
                     </button>
 

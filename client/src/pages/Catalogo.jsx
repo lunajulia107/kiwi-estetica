@@ -93,6 +93,7 @@ const Catalogo = () => {
                 setSelectedCategory(cat);
                 updateUrl(cat);
               }}
+              type="button"
             >
               {cat === "todos" ? "Todos" : labelize(cat)}
             </button>
