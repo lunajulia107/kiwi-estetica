@@ -1,20 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const SearchBar = ({ busca, setBusca }) => {
-  const [valorInput, setValorInput] = useState(busca);
+// SearchBar componente com funcionalidade de debounce para otimizar a busca por nome. 
+// O debounce evita que a função de busca seja chamada a cada tecla digitada, esperando um intervalo de 500ms após a última digitação para executar a busca.
+const SearchBar = ({ search, setSearch }) => {
+  const [valueInput, setValueInput] = useState(search || "");
   const debounceTimeout = useRef(null);
 
   useEffect(() => { 
     clearTimeout(debounceTimeout.current);
     debounceTimeout.current = setTimeout(() => {
-      setBusca(valorInput);
+      setSearch(valueInput);
     }, 500);
     return () => clearTimeout(debounceTimeout.current);
-  }, [valorInput, setBusca]);
+  }, [valueInput, setSearch]);
 
-  const limparBusca = () => {
-    setValorInput("");
-    setBusca("");
+  const clearSearch = () => {
+    setValueInput("");
+    setSearch("");
   };
 
   return (
@@ -26,20 +28,23 @@ const SearchBar = ({ busca, setBusca }) => {
       <span className="input-group-text" id="search-icon">
         <i aria-hidden="true" className="bi bi-search" /> 
       </span>
+
+      {/* O campo de entrada de pesquisa é acessível, com aria-label para descrever sua função e aria-describedby para associar o ícone de pesquisa. */}
+      {/* O botão de limpar pesquisa também é acessível, com aria-label para indicar sua função. A busca é atualizada com debounce para melhorar a performance. */}
       <input
         aria-describedby="search-icon"
         aria-label="Pesquisar por nome"
         className="form-control"
-        onChange={(e) => setValorInput(e.target.value)}
+        onChange={(e) => setValueInput(e.target.value)}
         placeholder="Pesquisar por nome..."
         type="search"
-        value={valorInput}
+        value={valueInput}
       />
-      {valorInput && (
+      {valueInput && (
         <button
           aria-label="Limpar pesquisa"
           className="btn btn-outline-secondary"
-          onClick={limparBusca}
+          onClick={clearSearch}
           type="button"
         >
           <span aria-hidden="true">&times;</span>

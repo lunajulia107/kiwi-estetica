@@ -12,6 +12,7 @@ function Login() {
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [feedbackType, setFeedbackType] = useState("");
 
+  // Função para validar o formulário e enviar os dados de login.
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -44,6 +45,7 @@ function Login() {
       return;
     }
 
+    // Enviar os dados de login para o backend.
     fetch("http://localhost:5000/api/admin/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -84,6 +86,7 @@ function Login() {
             Faça seu login para acessar a área administrativa.
           </p>
 
+          { /* Formulário de login. */}
           <form className="d-flex flex-column gap-3 pb-3" onSubmit={handleSubmit}>
             <FormField
               label="Email"
@@ -115,9 +118,10 @@ function Login() {
         </article>
       </div>
 
+      {/* Imagem decorativa. */}
       <div className="align-items-center col-xl-6 d-flex justify-content-center overflow-hidden position-relative">
         <img
-          alt="Furniture"
+          alt="Notebook Apple sobre um suporte de madeira em uma mesa minimalista, com velas acesas e plantas ao fundo, criando um ambiente aconchegante de trabalho."
           className="h-100 img-fluid login-image object-fit-cover w-100"
           src="/images/login.png"
         />

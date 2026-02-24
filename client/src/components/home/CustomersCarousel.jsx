@@ -72,6 +72,7 @@ function CustomersCarousel() {
           <p className="fw-normal lead">
             Confira os relatos de quem <span className="fw-semibold">já experimentou</span> nossos cuidados.
           </p>
+          {/* Botões de navegação do carrossel */}
           <nav
             aria-label="Navegação do carrossel de depoimentos"
             className="align-items-center d-flex flex-row gap-2 justify-content-between"
@@ -90,6 +91,7 @@ function CustomersCarousel() {
         </div>
       </header>
 
+      {/* Carrossel de depoimentos dos clientes */}
       <div className="container-fluid mt-4 overflow-hidden">
         <div className="flex-nowrap justify-content-center row">
           {getVisibleCustomers().map((customer) => (

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
+// ServiceCard é o componente que exibe as informações básicas do serviço.
 const ServiceCard = ({
   service,
   variants,
@@ -19,6 +20,7 @@ const ServiceCard = ({
       variants={variants}
     >
       <div className="align-items-start bg-white d-flex flex-column h-100 p-3 rounded-4 text-forest-green w-100">
+        {/* Imagem do serviço */}
         <figure className="mb-3 w-100">
           <img
             alt={service.title}
@@ -32,7 +34,8 @@ const ServiceCard = ({
             }}
           />
         </figure>
-
+        
+        {/* Categoria e título do serviço */}
         <header className="w-100">
           {service.category && (
             <span className="badge bg-brown fw-medium mb-2 rounded-4">
@@ -54,6 +57,7 @@ const ServiceCard = ({
           </p>
         )}
 
+        {/* Rodapé com preço, duração e link para detalhes */}
         <footer className="align-items-center d-flex justify-content-between mt-auto pt-3 w-100">
           <div>
             {service.price && (
@@ -81,6 +85,7 @@ const ServiceCard = ({
   );
 };
 
+// FlipCard é o componente que exibe o card com a funcionalidade de flip para mostrar a descrição do serviço.
 const FlipCard = ({ service, pageLink, linkText }) => {
   const [flipped, setFlipped] = useState(false);
 

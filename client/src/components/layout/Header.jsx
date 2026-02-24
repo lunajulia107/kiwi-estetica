@@ -27,12 +27,15 @@ const Header = () => {
         aria-label="Menu principal"
       >
         <div className="container gap-3">
+          { /* Logotipo da empresa, clicável para retornar à página inicial */ }
           <NavLink className="navbar-brand" to="/">
             <img
-              alt="Logotipo da Kiwi Estética"
+              alt="Logotipo da **Kiwi Estética** em fundo verde-escuro, com tipografia branca orgânica e um kiwi estilizado no nome."
               src="/images/logotipo.svg"
             />
           </NavLink>
+
+          { /* Botão de toggle para dispositivos móveis, com ícone padrão do Bootstrap */ }
           <button
             className="navbar-toggler"
             data-bs-target="#navbarNav"
@@ -44,6 +47,8 @@ const Header = () => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
+
+          { /* Links de navegação, com destaque para o botão "Agendar" */ }
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto gap-lg-4 gap-2">
               {links.map((link) => (

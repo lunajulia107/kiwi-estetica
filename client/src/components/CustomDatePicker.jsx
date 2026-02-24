@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+// CustomDatePicker é um componente de seleção de data personalizado que suporta desabilitar datas passadas e datas específicas, além de ser responsivo para telas menores. 
+// Ele exibe um calendário interativo para seleção de datas e formata a data no formato brasileiro (DD/MM/YYYY).
 const CustomDatePicker = ({ selectedDate, onDateChange, disabledDates = [] }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [currentDate, setCurrentDate] = useState(selectedDate ? new Date(selectedDate + 'T00:00:00') : new Date());
@@ -24,8 +26,10 @@ const CustomDatePicker = ({ selectedDate, onDateChange, disabledDates = [] }) =>
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    // Alterna a visibilidade do calendário.
     const toggleCalendar = () => setIsOpen(!isOpen);
 
+    // Verifica se uma data específica deve ser desabilitada (datas passadas ou datas na lista de desabilitadas).
     const isDisabled = (isoDateString) => {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -37,8 +41,9 @@ const CustomDatePicker = ({ selectedDate, onDateChange, disabledDates = [] }) =>
             return true;
         }
         return disabledDates.includes(isoDateString);
-    };
+    };  
 
+    // Manipula a seleção de uma data no calendário, atualizando o estado e chamando a função de callback com a data selecionada.
     const handleDateSelect = (date) => {
         const isoStr = date.toISOString().split('T')[0];
         if (isDisabled(isoStr)) {
@@ -49,11 +54,13 @@ const CustomDatePicker = ({ selectedDate, onDateChange, disabledDates = [] }) =>
         setIsOpen(false);
     };
 
+    // Manipula a mudança de mês no calendário, atualizando o estado para refletir o novo mês selecionado.
     const handleMonthChange = (e) => {
         const newMonth = parseInt(e.target.value, 10);
         setCurrentDate(prev => new Date(prev.getFullYear(), newMonth, 1));
     };
 
+    // Manipula a mudança de ano no calendário, atualizando o estado para refletir o novo ano selecionado.
     const handleYearChange = (e) => {
         const newYear = parseInt(e.target.value, 10);
         setCurrentDate(prev => new Date(newYear, prev.getMonth(), 1));
@@ -125,6 +132,8 @@ const CustomDatePicker = ({ selectedDate, onDateChange, disabledDates = [] }) =>
         }
     };
 
+    // Converte uma string de data no formato brasileiro (DD/MM/YYYY) para o formato ISO (YYYY-MM-DD), 
+    // validando a data e verificando se ela deve ser desabilitada.
     const parseDateBR = (dateString) => {
         const match = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
         if (!match) return '';
@@ -143,6 +152,8 @@ const CustomDatePicker = ({ selectedDate, onDateChange, disabledDates = [] }) =>
         return isoDate;
     };
 
+    // Manipula a mudança no campo de entrada de data, formatando a entrada no formato brasileiro e atualizando o estado com a data selecionada, 
+    // validando a data e verificando se ela deve ser desabilitada.
     const handleInputChange = (e) => {
         let value = e.target.value;
         let cleanValue = value.replace(/\D/g, '');
@@ -171,6 +182,8 @@ const CustomDatePicker = ({ selectedDate, onDateChange, disabledDates = [] }) =>
         { value: 10, label: 'Novembro' }, { value: 11, label: 'Dezembro' },
     ];
 
+    // Em telas menores que 400px de largura, renderiza um input nativo do tipo "date" para melhor usabilidade em dispositivos móveis, 
+    // enquanto em telas maiores, renderiza o calendário personalizado.
     if (windowWidth < 400) {
         return (
             <input
@@ -183,6 +196,7 @@ const CustomDatePicker = ({ selectedDate, onDateChange, disabledDates = [] }) =>
         );
     }
 
+    // Renderiza o campo de entrada de data e, se o calendário estiver aberto, renderiza o calendário personalizado para seleção de datas.
     return (
         <div className="position-relative" ref={datePickerRef}>
             <input

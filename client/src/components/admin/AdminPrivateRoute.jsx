@@ -1,6 +1,7 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
+// Função para verificar se o usuário está autenticado
 function PrivateRoute() {
     const token = localStorage.getItem("token");
 

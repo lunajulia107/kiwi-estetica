@@ -12,7 +12,6 @@
     transition: all 0.3s ease;
 
     &:disabled {
-      //background-color: lighten(mix(white, $cor, 20%), 30%) !important; // Lighter color
       cursor: default;
       opacity: 0.7;
     }

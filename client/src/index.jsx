@@ -6,6 +6,7 @@ import App from './App';
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
 
+// Render o componente App dentro do Router para habilitar o roteamento em toda a aplicação.
 root.render(
   <React.StrictMode>
     <Router>

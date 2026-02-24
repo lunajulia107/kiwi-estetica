@@ -12,6 +12,7 @@ const Appointments = () => {
   const itemsPerPage = 5;
   const modalRef = useRef();
  
+  // Busca os agendamentos ao carregar o componente.
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
@@ -47,12 +48,14 @@ const Appointments = () => {
     fetchAppointments();
   }, []);
  
+  // Abre o modal e define o agendamento selecionado.
   const openModal = (appointment) => {
     setSelectedAppointment(appointment);
     const modal = new window.bootstrap.Modal(modalRef.current);
     modal.show();
   };
  
+  // Envia a requisição para confirmar o agendamento e atualiza o estado local.
   const confirmAppointment = async () => {
     const { id } = selectedAppointment;
 
@@ -83,6 +86,7 @@ const Appointments = () => {
     }
   }; 
  
+  // Aplica os filtros de status e busca, e depois paginar os resultados.
   const filteredAppointments = appointments.filter((apt) => {
     const statusMatch =
       statusFilter === "todos" || apt.status === statusFilter;
@@ -99,11 +103,13 @@ const Appointments = () => {
   const end = start + itemsPerPage;
   const paginatedAppointments = filteredAppointments.slice(start, end);
 
+  // Navega para a página selecionada, garantindo que esteja dentro dos limites.
   const goToPage = (num) => {
     if (num < 1 || num > totalPages) return;
     setCurrentPage(num);
   };
 
+  // Reseta para a primeira página sempre que os filtros ou a busca forem alterados.
   useEffect(() => {
     setCurrentPage(1);
   }, [statusFilter, search]);
@@ -114,7 +120,7 @@ const Appointments = () => {
     <>
       <h3 className="fw-bold mb-3">Agendamentos</h3>
 
-      {/* FILTROS */}
+      {/* Filtros. */}
       <div className="align-items-center d-flex flex-wrap gap-3 justify-content-between mb-3">
         <SearchBar busca={search} setBusca={setSearch} />
 
@@ -132,7 +138,7 @@ const Appointments = () => {
         </div>
       </div>
 
-      {/* MOBILE */}
+      {/* Layout para dispositivos móveis. */}
       <div className="d-md-none">
         {paginatedAppointments.map((apt) => (
           <div className="border-0 card mb-3" key={apt.id}>
@@ -160,7 +166,7 @@ const Appointments = () => {
         ))}
       </div>
 
-      {/* TABELA DESKTOP */}
+      {/* Layout para desktop. */}
       <div className="bg-white d-md-block d-none p-3 rounded-4 table-responsive">
         <table className="table table-bordered table-hover">
           <thead className="table-light">
@@ -202,7 +208,7 @@ const Appointments = () => {
         </table>
       </div>
 
-      {/* PAGINAÇÃO */}
+      {/* Paginação de agendamentos. */}
       {totalPages > 1 && (
         <nav className="d-flex justify-content-end mt-3">
           <ul className="pagination">
@@ -232,7 +238,7 @@ const Appointments = () => {
         </nav>
       )}
 
-      {/* MODAL */}
+      {/* Modal para confirmação de agendamento. */}
       <div
         aria-hidden="true"
         className="modal fade"

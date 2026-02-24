@@ -1,3 +1,4 @@
+// CarouselButton componente que renderiza um botão estilizado para navegação em carrossel.
 const CarouselButton = ({ ariaLabel, onClick, iconClass }) => {
   return (
     <button

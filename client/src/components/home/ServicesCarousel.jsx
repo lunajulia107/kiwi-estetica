@@ -59,6 +59,7 @@ function ServicesCarousel() {
           <p className="bg-forest-green d-flex p-2 pe-3 ps-3 rounded-5 text-white">
             by Taís Bonilha
           </p> 
+          {/* Botões de navegação do carrossel */}
           <div className="align-items-center d-flex flex-row gap-2 justify-content-between">
             <CarouselButton 
               ariaLabel="Anterior" 
@@ -74,6 +75,7 @@ function ServicesCarousel() {
         </div>
       </div>
 
+      {/* Container do carrossel com os cards de serviços */}
       <div className="container container-sm-fluid mt-4 overflow-hidden px-0">
         <div className="flex-nowrap row">
           {getVisibleServices()

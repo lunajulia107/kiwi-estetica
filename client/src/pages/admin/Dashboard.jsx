@@ -17,6 +17,7 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // Busca os dados do dashboard ao montar o componente.
     useEffect(() => {
         async function fetchDashboard() {
             try {
@@ -40,6 +41,7 @@ const Dashboard = () => {
     if (loading) return <p>Carregando dados do dashboard...</p>;
     if (error) return <p>Erro: {error}</p>;
 
+    // Desestrutura os dados do dashboard para facilitar o uso nos gráficos e na interface.
     const {
         nextClient,
         totalToday,
@@ -49,6 +51,7 @@ const Dashboard = () => {
         topProcedures
     } = dashboardData;
 
+    // Configura os dados e opções para o gráfico de rosca (Doughnut) que mostra a distribuição de agendamentos por categoria.
     const dataDoughnut = {
         labels: categoryAppointments.labels,
         datasets: [
@@ -61,6 +64,7 @@ const Dashboard = () => {
         ],
     };
 
+    // Configura as opções para o gráfico de rosca, incluindo a posição da legenda e o formato das tooltips.
     const optionsDoughnut = {
         responsive: true,
         plugins: {
@@ -76,6 +80,7 @@ const Dashboard = () => {
         },
     };
 
+    // Configura os dados e opções para o gráfico de barras (Bar) que mostra os top 5 procedimentos mais agendados.
     const dataBar = {
         labels: topProcedures.labels,
         datasets: [
@@ -88,6 +93,7 @@ const Dashboard = () => {
         ],
     };
 
+    // Configura as opções para o gráfico de barras, incluindo a orientação horizontal, a escala e o formato das tooltips.
     const optionsBar = {
         indexAxis: 'y',
         responsive: true,
@@ -109,6 +115,7 @@ const Dashboard = () => {
 
     return (
         <>
+            {/* Seção de resumo: mostra a próxima cliente, total de atendimentos hoje, pendentes e confirmados. */}
             <section className="bg-forest-green pe-4 pe-xxl-0 ps-4 ps-xxl-0 py-5 rounded-4 text-light">
                 <div className="container-fluid">
                      <div className="align-items-center row">
@@ -150,6 +157,7 @@ const Dashboard = () => {
                 </div>
             </section>
 
+            { /* Seção de gráficos: mostra o top 5 procedimentos e a distribuição de agendamentos por categoria. */}
             <div className="container-fluid mt-4">
                 <div className="row">
                     <article className="col-12 col-xxl-8 mb-4 ps-0">

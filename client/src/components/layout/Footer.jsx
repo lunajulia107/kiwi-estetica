@@ -44,7 +44,7 @@ const Footer = () => {
     <footer className="bg-pale-sage py-5 text-dark">
       <div className="container">
         <div className="justify-content-between row">
-          {/* Coluna KIWI */}
+          {/* Coluna com logo */}
           <div className="col-12 col-lg-4 mb-5">
             <Link
               aria-label="Logotipo Kiwi Estética."
@@ -52,14 +52,14 @@ const Footer = () => {
               to="/"
             >
               <img
-                alt="Logotipo Kiwi Estética"
+                alt="Logotipo da **Kiwi Estética** em fundo verde-escuro, com tipografia branca orgânica e um kiwi estilizado no nome."
                 className="img-fluid"
                 src="/images/logotipo-slogan.svg"
               />
             </Link>
           </div>
 
-          {/* Coluna 1 */}
+          {/* Coluna 1 - Links */}
           <nav
             aria-label="Conheça o SPA"
             className="col-12 col-md-3 col-lg-2 d-flex flex-column gap-2 mb-4"
@@ -80,7 +80,7 @@ const Footer = () => {
             </ul>
           </nav>
 
-          {/* Coluna 2 */}
+          {/* Coluna 2 - Links */}
           <nav
             aria-label="Renove-se"
             className="align-items-start col-12 col-md-3 col-lg-2 d-flex flex-column gap-2 mb-5"
@@ -101,7 +101,7 @@ const Footer = () => {
             </ul>
           </nav>
 
-          {/* Coluna Endereço */}
+          {/* Coluna 3- Endereço */}
           <address
             aria-label="Endereço Kiwi Estética"
             className="align-items-start col-12 col-md-3 col-lg-2 d-flex flex-column gap-2 mb-4 text-forest-green"

@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 
+// CTASection componente para chamadas à ação, com animação de entrada e opções de personalização. 
+// Utilizado próximo ao rodapé.
 const CTASection = ({ title, text, content, bgColor = "bg-forest-green", reverse = false }) => {
   return (
     <motion.section

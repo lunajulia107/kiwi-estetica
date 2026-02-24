@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import servicesData from "../json/servicesData.json";
 import { FlipCard } from "../components/ServiceFlipCard.jsx";
 import CTASection from "../components/CTASection.jsx";
-
+ 
+// Função para normalizar strings (remover acentos, espaços, etc.) para criar slugs.
 const normalize = (str) =>
   str
     ?.toLowerCase()
@@ -12,16 +13,19 @@ const normalize = (str) =>
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/\s+/g, "-");
 
+// Função para transformar slugs em labels legíveis.
 const labelize = (slug) =>
   slug
     .replace(/-/g, " ")
     .replace(/\b\w/g, (l) => l.toUpperCase());
 
+// Função para ler os hashes da URL e normalizá-los.
 const readHashes = () => {
   if (typeof window === "undefined") return [];
   return window.location.hash.split("#").filter(Boolean).map(normalize);
 };
 
+// Gerar a lista de categorias únicas a partir dos dados dos serviços.
 const categories = [
   "todos",
   ...Array.from(
@@ -60,6 +64,7 @@ const Catalogo = () => {
     window.location.hash = hash;
   };
 
+  // Filtrar os serviços com base no termo de busca e na categoria selecionada.
   const filtered = servicesData.filter((proc) => {
     const matchesSearch = normalize(proc.title).includes(
       normalize(searchTerm)
@@ -79,7 +84,8 @@ const Catalogo = () => {
           Conheça nossos <br />
           <span className="fw-bold">Procedimentos & Terapias</span>
         </h2>
-
+        
+        {/* Navegação por categorias. */}
         <nav className="d-flex flex-wrap gap-2 justify-content-center mb-4">
           {categories.map((cat) => (
             <button
@@ -100,6 +106,7 @@ const Catalogo = () => {
           ))}
         </nav>
 
+        {/* Grid de serviços. */}
         <div className="g-3 mb-4 row w-100">
           {filtered.map((proc, index) => {
             const slug = proc.slug || normalize(proc.title);
@@ -130,6 +137,7 @@ const Catalogo = () => {
         </div>
       </section>
 
+      {/* Seção de CTA com certificações e cuidados pré-procedimento. */}
       <CTASection
         title={
           <>

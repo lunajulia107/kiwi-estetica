@@ -1,3 +1,4 @@
+// FormField componente para inputs, selects e textareas com suporte a erros e estilos personalizados.
 const FormField = ({
   label,
   name,
@@ -16,6 +17,7 @@ const FormField = ({
   } ${error ? "is-invalid" : ""} ${className}`;
 
   const renderField = () => {
+    // SELECT
     if (as === "select") {
       return (
         <select
@@ -39,6 +41,7 @@ const FormField = ({
       );
     }
 
+    // TEXTAREA
     if (as === "textarea") {
       return (
         <textarea
@@ -68,6 +71,7 @@ const FormField = ({
     );
   };
 
+  // Renderiza o campo com label e mensagem de erro, se houver.
   return (
     <div>
       {label && (

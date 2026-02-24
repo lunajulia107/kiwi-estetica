@@ -17,6 +17,7 @@ const Agendar = () => {
 
   const [errors, setErrors] = useState({});
 
+  // Horários fixos de atendimento.
   const [availableTimes] = useState([
     "08:00","09:00","10:00","11:00",
     "13:00","14:00","15:00","16:00","17:00",
@@ -30,6 +31,7 @@ const Agendar = () => {
   const [occupiedTimes, setOccupiedTimes] = useState([]);
   const [fullyBookedDates, setFullyBookedDates] = useState([]);
 
+  // Procedimentos organizados por categoria.
   const proceduresByCategory = {
     "Procedimentos Corporais": [
       "Drenagem Linfática","Esfoliação Corporal","Massagem Relaxante"
@@ -40,6 +42,7 @@ const Agendar = () => {
     "Terapias Complementares": ["Acupuntura","Cromoterapia", "Ventosaterapia"],
   };
 
+  // Lógica para pré-selecionar categoria e procedimento via hash na URL.
   useEffect(() => {
     const handleHash = () => {
       if (!window.location.hash) return;
@@ -108,7 +111,8 @@ const Agendar = () => {
     setErrors(prev => ({ ...prev, time: "" }));
     setSubmissionMessage({ text: "", type: "" });
   };
-
+ 
+  // Valida os campos do formulário e retorna mensagens de erro específicas.
   const validateField = (name, value) => {
     switch (name) {
       case "name":
@@ -137,7 +141,8 @@ const Agendar = () => {
         return "";
     }
   };
-
+  
+  // Verifica se o horário selecionado já passou (apenas para o dia atual).
   const isPastTime = (time) => {
     if (!formData.date) return false;
 
@@ -153,6 +158,7 @@ const Agendar = () => {
     return compare <= today;
   };
  
+  // Envia os dados do formulário para o backend e lida com a resposta.
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -210,6 +216,7 @@ const Agendar = () => {
     }
   };
  
+  // Busca os horários ocupados para a data selecionada.
   useEffect(() => {
     const fetch = async () => {
       if (!formData.date) {
@@ -230,7 +237,7 @@ const Agendar = () => {
     fetch();
   }, [formData.date]);
 
-  /* ---------------- DATAS LOTADAS ---------------- */
+  // Busca as datas completamente ocupadas para desabilitar no calendário.
   const fetchFullyBookedDates = useRef(null);
 
   useEffect(() => {
@@ -263,8 +270,6 @@ const Agendar = () => {
       <div className="align-items-start d-flex flex-column justify-content-center p-4 w-100">
         <div className="container pb-5 pt-5">
           <div className="gap-5 pb-0 pb-md-5 pt-0 pt-md-5 row">
-
-            {/* TEXTO ESQUERDA */}
             <div className="col-lg-7 d-flex flex-column gap-5 justify-content-between">
               <header className="d-flex flex-column gap-2">
                 <h1 className="display-4 fw-medium">
@@ -276,6 +281,7 @@ const Agendar = () => {
                 </p>
               </header>
 
+              {/* Contatos */}
               <div className="d-flex flex-column gap-2">
                 <IconRow icon="bi bi-whatsapp" as="a" className="text-decoration-none text-white" href="https://wa.me/5511987654321">
                   (11) 98765-4321
@@ -293,25 +299,24 @@ const Agendar = () => {
               </div>
             </div>
 
-            {/* FORM */}
             <article className="col-lg-4">
               <div className="bg-white p-3 p-lg-4 rounded-4">
-
                 <h3 className="fw-bold mb-2 text-center text-forest-green">
                   Agendamento
                 </h3>
 
+                {/* Formulário de agendamento. */}
                 <form className="d-flex flex-column gap-3" onSubmit={handleSubmit}>
-
                   <FormField label="Nome" name="name" value={formData.name} onChange={handleChange} error={errors.name}/>
                   <FormField label="Celular" name="phone" value={formData.phone} onChange={handleChange} error={errors.phone}/>
                   <FormField label="Categoria" name="category" as="select" value={formData.category} onChange={handleChange} error={errors.category} options={Object.keys(proceduresByCategory).sort()}/>
-
+                  
+                  {/* O campo de procedimento só aparece após selecionar uma categoria. */}
                   {formData.category && (
                     <FormField label="Procedimento" name="procedure" as="select" value={formData.procedure} onChange={handleChange} error={errors.procedure} options={proceduresByCategory[formData.category]?.sort()}/>
                   )}
 
-                  {/* DATA */}
+                  {/* Campo de data. */}
                   <div>
                     <label className="form-label mb-2 text-forest-green">Data</label>
                     <CustomDatePicker
@@ -322,7 +327,7 @@ const Agendar = () => {
                     {errors.date && <p className="text-danger mt-1">{errors.date}</p>}
                   </div>
 
-                  {/* HORÁRIO */}
+                  {/* Campo de horário. */}
                   <div>
                     <label className="form-label mb-2 text-forest-green">Horário</label>
 
@@ -351,7 +356,7 @@ const Agendar = () => {
                     {errors.time && <p className="mt-1 text-danger">{errors.time}</p>}
                   </div>
 
-                  {/* BOTÃO */}
+                  {/* Botão de envio do formulário. */}
                   <div className="d-flex flex-column justify-content-start mb-2">
                     <button className="btn btn-lime-green pe-4 ps-4 text-white" type="submit">
                       Agendar agora
@@ -367,11 +372,9 @@ const Agendar = () => {
                       </p>
                     )}
                   </div>
-
                 </form>
               </div>
             </article>
-
           </div>
         </div>
       </div>

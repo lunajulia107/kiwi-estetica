@@ -30,7 +30,7 @@ const AdminHeader = () => {
             >
                     <NavLink className="d-flex d-xxl-none navbar-brand" to="/dashboard">
                         <img
-                            alt="Logotipo da Kiwi Estética"
+                            alt="Logotipo da **Kiwi Estética** em fundo verde-escuro, com tipografia branca orgânica e um kiwi estilizado no nome."
                             src="/images/logotipo.svg"
                         />
                     </NavLink>

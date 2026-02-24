@@ -10,6 +10,7 @@ import CTASection from "../components/CTASection.jsx";
 const Home = () => {
   return (
     <> 
+      {/* Seção principal do Home. */}
       <motion.section
         className="mb-5 position-relative"
         initial={{ opacity: 0, y: -50 }}
@@ -43,6 +44,7 @@ const Home = () => {
         </header>
       </motion.section>
 
+      {/* Seção de apresentação do SPA. */}
       <motion.section
         className="position-relative py-5"
         initial={{ opacity: 0, x: 50 }}
@@ -84,7 +86,8 @@ const Home = () => {
 
             <div className="col-12 col-lg-6 position-relative">
               <img
-                alt="Espaço do SPA Kiwi Estética."
+                alt="Espaço do SPA Kiwi Estética. Sala de estética minimalista com maca coberta por toalhas claras, 
+                produtos de cuidado ao lado e vista para um jardim iluminado pela luz natural."
                 className="img-fluid rounded-4 w-100"
                 src="/images/home/spa.png"
               />
@@ -93,20 +96,25 @@ const Home = () => {
         </div>
       </motion.section>
  
+      {/* Seção de apresentação da marca. */}
       <InfoSection
         title="Kiwi"
         highlight="Estética"
         text="Mais do que estética, a Kiwi foi criada para que você se cuide respeitando sua pele e seu corpo."
         imgSrc="/images/tais.png"
-        imgAlt="Foto da Taís Bonilha, fundadora da Kiwi Estética."
+        imgAlt="Foto da Taís Bonilha - fundadora da Kiwi Estética - profissional de estética utilizando máscara e luvas azuis, 
+        preparando-se para um procedimento em ambiente limpo e profissional."
         btnText="Cuide-se"
         btnLink="/agendar"
       /> 
 
+      {/* Seção de apresentação dos serviços. */}
       <ServicesCarousel />
 
+      {/* Seção de depoimentos dos clientes. */}
       <CustomersCarousel />
  
+      {/* Seção de chamada para ação. */}
       <CTASection
         title={
           <>

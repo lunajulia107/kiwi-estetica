@@ -52,16 +52,17 @@ const AdminSidebar = () => {
     navigate('/login');
   };
  
-  const fixedAvatar = "/images/tais-bonilha.png";  
+  const fixedAvatar = "/images/tais.png";  
 
   return (
     <>
       {!isMobile && (
         <aside className="bg-forest-green d-flex flex-column justify-content-between p-4 vh-100">
+          {/* Links para navegação */}
           <div>
             <NavLink className="d-block mb-4 navbar-brand" to="/">
               <img
-                alt="Logotipo da Kiwi Estética"
+                alt="Logotipo da **Kiwi Estética** em fundo verde-escuro, com tipografia branca orgânica e um kiwi estilizado no nome."
                 src="/images/logotipo.svg"
               />
             </NavLink>
@@ -105,12 +106,12 @@ const AdminSidebar = () => {
             </div>
           </div>
 
-          {/* Rodapé com info do usuário */}
+          {/* Rodapé com info do usuário. */}
           <div className="d-flex flex-column gap-2 p-3 rounded-4" style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}>
             <div className="d-flex flex-row gap-3 align-items-start">
               <img
                 src={fixedAvatar}
-                alt="Avatar"
+                alt="Avatar do usuário logado no sistema."
                 width="40"
                 height="40"
                 className="bg-lavender rounded-4"

@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
 import ActionButton from "./ActionButton";
 
+// InfoSection é um componente reutilizável para exibir seções de informação com uma imagem, texto e um botão de ação opcional. 
+// Ele aceita várias props para personalizar seu conteúdo e layout, incluindo a possibilidade de inverter a ordem dos elementos para uma melhor responsividade. 
+// O componente também utiliza animações suaves ao entrar na visualização para melhorar a experiência do usuário.
 const InfoSection = ({
   title,
   highlight,

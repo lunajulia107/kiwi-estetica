@@ -5,7 +5,7 @@ import CTASection from "../components/CTASection";
 import ActionButton from "../components/ActionButton";
 import { ServiceCard } from "../components/ServiceFlipCard";
 
-/* ===== Animação SOMENTE da experiência ===== */
+// Animação SOMENTE da seção experiência.
 const experienceContainer = {
   hidden: {},
   visible: {
@@ -30,6 +30,7 @@ const experienceCard = {
   },
 };
 
+// Dados dos serviços para a seção experiência
 const services = [ 
   {
     id: 1,
@@ -54,6 +55,7 @@ const services = [
 const Sobre = () => {
   return (
     <> 
+      {/* Seção de apresentação da profissional.*/}
       <InfoSection
         title={
           <>
@@ -66,6 +68,7 @@ const Sobre = () => {
         imgSrc="/images/tais.png"
       /> 
       
+      {/* Seção de formações acadêmicas. */}
       <section
         className="bg-forest-green pe-4 pe-lg-0 ps-4 ps-lg-0 py-5 text-light"
         aria-label="Formações Acadêmicas"
@@ -97,6 +100,7 @@ const Sobre = () => {
         </div>
       </section>
 
+      {/* Seção de apresentação do espaço físico.*/}
       <InfoSection
         title="Nosso"
         highlight="Espaço"
@@ -108,6 +112,7 @@ const Sobre = () => {
         reverse={true}
       />
   
+      {/* Seção de apresentação da experiência profissional.*/}
       <section className="d-flex flex-column gap-3 py-5">
         <header className="align-items-start container d-flex flex-column gap-3 text-start">
           <h2 className="fs-1 fw-semibold text-forest-green">
@@ -141,6 +146,7 @@ const Sobre = () => {
         </motion.div>
       </section>
 
+      {/* Seção de chamada para ação.*/}
       <CTASection
         title={
           <>

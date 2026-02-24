@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
+// ActionButton componente que renderiza um botão estilizado com base na variante fornecida (solid ou outline) e navega para a rota especificada ao ser clicado.
 const ActionButton = ({ text, to, variant = "solid", className = "" }) => {
   const navigate = useNavigate();
  
