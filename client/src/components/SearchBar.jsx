@@ -1,22 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
 
 // SearchBar componente com funcionalidade de debounce para otimizar a busca por nome. 
-// O debounce evita que a função de busca seja chamada a cada tecla digitada, esperando um intervalo de 500ms após a última digitação para executar a busca.
-const SearchBar = ({ search, setSearch }) => {
-  const [valueInput, setValueInput] = useState(search || "");
+// O debounce evita que a função de busca seja chamada a cada tecla digitada,
+// esperando um intervalo de 500ms após a última digitação para executar a busca.
+const SearchBar = ({ value, onChange }) => {
+  const [valueInput, setValueInput] = useState(value || "");
   const debounceTimeout = useRef(null);
 
   useEffect(() => { 
     clearTimeout(debounceTimeout.current);
+
     debounceTimeout.current = setTimeout(() => {
-      setSearch(valueInput);
+      onChange(valueInput);
     }, 500);
+
     return () => clearTimeout(debounceTimeout.current);
-  }, [valueInput, setSearch]);
+  }, [valueInput, onChange]);
 
   const clearSearch = () => {
     setValueInput("");
-    setSearch("");
+    onChange("");
   };
 
   return (
@@ -40,6 +43,7 @@ const SearchBar = ({ search, setSearch }) => {
         type="search"
         value={valueInput}
       />
+
       {valueInput && (
         <button
           aria-label="Limpar pesquisa"

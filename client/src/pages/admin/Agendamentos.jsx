@@ -122,7 +122,7 @@ const Appointments = () => {
 
       {/* Filtros. */}
       <div className="align-items-center d-flex flex-wrap gap-3 justify-content-between mb-3">
-        <SearchBar busca={search} setBusca={setSearch} />
+        <SearchBar value={search} onChange={setSearch} />
 
         <div className="align-items-center d-flex gap-3">
           <label>Filtrar por</label>
