@@ -149,9 +149,7 @@ Projeto acadêmico desenvolvido em equipe, com divisão de responsabilidades sem
 💻 **Desenvolvimento e implementação:** Julia Gomes
 🎨 **UI Design:** Samara Duarte
 🔎 **UX Research:** Camila Bonilha
-
   
-
 ---
 
 ## 📄 Licença
@@ -167,4 +165,3 @@ Projeto desenvolvido com foco em:
 * Experiência do usuário
 * Performance
 * Organização de código
-* Escalabilidade futura
