@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import SearchBar from "../../components/SearchBar";
 
 const Appointments = () => {
@@ -11,7 +11,12 @@ const Appointments = () => {
 
   const itemsPerPage = 5;
   const modalRef = useRef();
- 
+  const modalInstance = useRef(null);
+
+  // Normaliza status
+  const normalizeStatus = (status) =>
+    String(status || "").trim().toLowerCase();
+
   // Busca os agendamentos ao carregar o componente.
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -39,7 +44,7 @@ const Appointments = () => {
         }
 
         setAppointments(Array.isArray(result.data) ? result.data : []);
-      } catch (err) { 
+      } catch (err) {
         setError(err.message);
         setAppointments([]);
       }
@@ -47,16 +52,22 @@ const Appointments = () => {
 
     fetchAppointments();
   }, []);
- 
-  // Abre o modal e define o agendamento selecionado.
+
+  // Cria instancia do modal
+  useEffect(() => {
+    if (modalRef.current && window.bootstrap) {
+      modalInstance.current = new window.bootstrap.Modal(modalRef.current);
+    }
+    return () => modalInstance.current?.dispose();
+  }, []);
+
   const openModal = (appointment) => {
     setSelectedAppointment(appointment);
-    const modal = new window.bootstrap.Modal(modalRef.current);
-    modal.show();
+    modalInstance.current?.show();
   };
- 
-  // Envia a requisição para confirmar o agendamento e atualiza o estado local.
+
   const confirmAppointment = async () => {
+    if (!selectedAppointment) return;
     const { id } = selectedAppointment;
 
     try {
@@ -80,54 +91,61 @@ const Appointments = () => {
         )
       );
 
-      window.bootstrap.Modal.getInstance(modalRef.current).hide();
+      modalInstance.current?.hide();
     } catch (err) {
       alert(err.message || "Erro ao confirmar agendamento");
     }
-  }; 
- 
-  // Aplica os filtros de status e busca, e depois paginar os resultados.
-  const filteredAppointments = appointments.filter((apt) => {
-    const statusMatch =
-      statusFilter === "todos" || apt.status === statusFilter;
+  };
 
-    const searchMatch = apt.name
-      .toLowerCase()
-      .includes(search.toLowerCase());
+  // Filtro + Ordenação para mostrar pendentes primeiro
+  const filteredAppointments = useMemo(() => {
+    const filtered = appointments.filter((apt) => {
+      const status = normalizeStatus(apt.status);
+      const filterValue = normalizeStatus(statusFilter);
+      
+      const statusMatch = filterValue === "todos" ? true : status === filterValue;
+      const searchMatch = (apt.name || "").toLowerCase().includes(search.toLowerCase());
 
-    return statusMatch && searchMatch;
-  });
- 
+      return statusMatch && searchMatch;
+    });
+
+    // Ordenação para garantir que pendentes apareçam na página 1
+    return filtered.sort((a, b) => {
+      const sA = normalizeStatus(a.status);
+      const sB = normalizeStatus(b.status);
+      if (sA === "pendente" && sB !== "pendente") return -1;
+      if (sA !== "pendente" && sB === "pendente") return 1;
+      return new Date(a.date) - new Date(b.date);
+    });
+  }, [appointments, statusFilter, search]);
+  
   const totalPages = Math.ceil(filteredAppointments.length / itemsPerPage);
   const start = (currentPage - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  const paginatedAppointments = filteredAppointments.slice(start, end);
+  const paginatedAppointments = filteredAppointments.slice(start, start + itemsPerPage);
 
-  // Navega para a página selecionada, garantindo que esteja dentro dos limites.
   const goToPage = (num) => {
     if (num < 1 || num > totalPages) return;
     setCurrentPage(num);
   };
 
-  // Reseta para a primeira página sempre que os filtros ou a busca forem alterados.
   useEffect(() => {
     setCurrentPage(1);
   }, [statusFilter, search]);
- 
+
   if (error) return <p className="text-danger">Erro: {error}</p>;
 
   return (
     <>
       <h3 className="fw-bold mb-3">Agendamentos</h3>
 
-      {/* Filtros. */}
       <div className="align-items-center d-flex flex-wrap gap-3 justify-content-between mb-3">
         <SearchBar value={search} onChange={setSearch} />
 
         <div className="align-items-center d-flex gap-3">
-          <label>Filtrar por</label>
+          <label htmlFor="status-filter">Filtrar por</label>
           <select
             className="form-select w-auto"
+            id="status-filter"
             onChange={(e) => setStatusFilter(e.target.value)}
             value={statusFilter}
           >
@@ -138,35 +156,39 @@ const Appointments = () => {
         </div>
       </div>
 
-      {/* Layout para dispositivos móveis. */}
+      {/* Layout Mobile */}
       <div className="d-md-none">
-        {paginatedAppointments.map((apt) => (
-          <div className="border-0 card mb-3" key={apt.id}>
-            <div className="card-body">
-              <h5 className="mb-2">{apt.name}</h5>
-              <p><strong className="fw-medium">Data:</strong> {apt?.date && new Date(apt.date).toLocaleDateString("pt-BR")} às {apt.time}</p>
-              <p><strong className="fw-medium">Procedimento:</strong> {apt.procedure}</p>
-              <p>
-                <strong className="fw-medium">Status:</strong>{" "}
-                <span className={`badge bg-${apt.status === "pendente" ? "warning" : "success"} fw-medium`}>
-                  {apt.status.charAt(0).toUpperCase() + apt.status.slice(1)}
-                </span>
-              </p>
-
-              {apt.status === "pendente" && (
-                <button
-                  className="btn btn-sm btn-lime-green text-white mt-4"
-                  onClick={() => openModal(apt)} type="button"
-                >
-                  Confirmar
-                </button>
-              )}
+        {paginatedAppointments.map((apt) => {
+          const status = normalizeStatus(apt.status);
+          return (
+            <div className="border-0 card mb-3" key={apt.id}>
+              <div className="card-body">
+                <h5 className="mb-2">{apt.name}</h5>
+                <p>
+                  <strong className="fw-medium">Data:</strong>{" "}
+                  {apt?.date && new Date(apt.date).toLocaleDateString("pt-BR")} às {apt.time}
+                </p>
+                <p>
+                  <strong className="fw-medium">Procedimento:</strong> {apt.procedure}
+                </p>
+                <p>
+                  <strong className="fw-medium">Status:</strong>{" "}
+                  <span className={`badge fw-medium ${status === "pendente" ? "bg-warning text-dark" : "bg-success"}`}>
+                    {status.charAt(0).toUpperCase() + status.slice(1)}
+                  </span>
+                </p>
+                {status === "pendente" && (
+                  <button className="btn btn-sm btn-lime-green text-white mt-4" onClick={() => openModal(apt)} type="button">
+                    Confirmar
+                  </button>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
-      {/* Layout para desktop. */}
+      {/* Layout Desktop */}
       <div className="bg-white d-md-block d-none p-3 rounded-4 table-responsive">
         <table className="table table-bordered table-hover">
           <thead className="table-light">
@@ -179,98 +201,73 @@ const Appointments = () => {
               <th>Ação</th>
             </tr>
           </thead>
-
           <tbody>
-            {paginatedAppointments.map((apt) => (
-              <tr key={apt.id}>
-                <td>{apt.name}</td>
-                <td>{apt?.date && new Date(apt.date).toLocaleDateString("pt-BR")}</td>
-                <td>{apt.time}</td>
-                <td>{apt.procedure}</td>
-                <td>
-                  <span className={`badge bg-${apt.status === "pendente" ? "warning" : "success"} fw-medium`}>
-                    {apt.status.charAt(0).toUpperCase() + apt.status.slice(1)}
-                  </span>
-                </td>
-                <td>
-                  {apt.status === "pendente" && (
-                    <button
-                      className="btn btn-sm btn-lime-green text-white"
-                      onClick={() => openModal(apt)} type="button"
-                    >
-                      Confirmar
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
+            {paginatedAppointments.map((apt) => {
+              const status = normalizeStatus(apt.status);
+              return (
+                <tr key={apt.id}>
+                  <td>{apt.name}</td>
+                  <td>{apt.date && new Date(apt.date).toLocaleDateString("pt-BR")}</td>
+                  <td>{apt.time}</td>
+                  <td>{apt.procedure}</td>
+                  <td>
+                    <span className={`badge fw-medium ${status === "pendente" ? "bg-warning text-dark" : "bg-success"}`}>
+                      {status.charAt(0).toUpperCase() + status.slice(1)}
+                    </span>
+                  </td>
+                  <td>
+                    {status === "pendente" && (
+                      <button className="btn btn-sm btn-lime-green text-white" onClick={() => openModal(apt)} type="button">
+                        Confirmar
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
 
-      {/* Paginação de agendamentos. */}
+      {/* Paginação */}
       {totalPages > 1 && (
         <nav className="d-flex justify-content-end mt-3">
           <ul className="pagination">
-            <li className={`page-item ${currentPage === 1 && "disabled"}`}>
-              <button className="page-link" onClick={() => goToPage(currentPage - 1)}>
-                Anterior
-              </button>
+            <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+              <button className="page-link" onClick={() => goToPage(currentPage - 1)}>Anterior</button>
             </li>
-
-            {[...Array(totalPages)].map((_, i) => {
-              const page = i + 1;
-              return (
-                <li key={page} className={`page-item ${currentPage === page && "active"}`}>
-                  <button className="page-link" onClick={() => goToPage(page)} type="button">
-                    {page}
-                  </button>
-                </li>
-              );
-            })}
-
-            <li className={`page-item ${currentPage === totalPages && "disabled"}`}>
-              <button className="page-link" onClick={() => goToPage(currentPage + 1)}>
-                Próximo
-              </button>
+            {[...Array(totalPages)].map((_, i) => (
+              <li key={i + 1} className={`page-item ${currentPage === i + 1 ? "active" : ""}`}>
+                <button className="page-link" onClick={() => goToPage(i + 1)} type="button">{i + 1}</button>
+              </li>
+            ))}
+            <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+              <button className="page-link" onClick={() => goToPage(currentPage + 1)}>Próximo</button>
             </li>
           </ul>
         </nav>
       )}
 
-      {/* Modal para confirmação de agendamento. */}
-      <div
-        aria-hidden="true"
-        className="modal fade"
-        ref={modalRef}
-        tabIndex="-1"
-      >
+      {/* Modal */}
+      <div aria-hidden="true" className="modal fade" ref={modalRef} tabIndex="-1">
         <div className="modal-dialog">
           <div className="modal-content">
             {selectedAppointment && (
               <>
                 <div className="modal-header">
                   <h5 className="modal-title">Agendamento</h5>
-                  <button className="btn-close" data-bs-dismiss="modal" />
+                  <button className="btn-close" data-bs-dismiss="modal" type="button" />
                 </div>
-
                 <div className="modal-body">
-                  <p> 
+                  <p>
                     <strong className="fw-medium">Cliente:</strong> {selectedAppointment.name} <br />
                     <strong className="fw-medium">Procedimento:</strong> {selectedAppointment.procedure} <br />
-                    <strong className="fw-medium">Data:</strong> 
-                    {selectedAppointment?.date && new Date(selectedAppointment.date).toLocaleDateString("pt-BR")} às {selectedAppointment.time}
-                  </p>  
+                    <strong className="fw-medium">Data:</strong> {selectedAppointment?.date && new Date(selectedAppointment.date).toLocaleDateString("pt-BR")} às {selectedAppointment.time}
+                  </p>
                 </div>
-
                 <div className="modal-footer">
-                  <button className="btn btn-light" data-bs-dismiss="modal" type="button">
-                    Cancelar
-                  </button>
-
-                  <button className="btn btn-lime-green text-white" onClick={confirmAppointment} type="button">
-                    Confirmar
-                  </button> 
+                  <button className="btn btn-light" data-bs-dismiss="modal" type="button">Cancelar</button>
+                  <button className="btn btn-lime-green text-white" onClick={confirmAppointment} type="button">Confirmar</button>
                 </div>
               </>
             )}
