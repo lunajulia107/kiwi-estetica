@@ -9,7 +9,7 @@ const Appointments = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState(null);
 
-  const itemsPerPage = 5;
+  const itemsPerPage = 15;
   const modalRef = useRef();
   const modalInstance = useRef(null);
 

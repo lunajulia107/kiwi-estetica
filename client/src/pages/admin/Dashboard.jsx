@@ -149,7 +149,7 @@ const Dashboard = () => {
                             <p className="col-10 mb-2 small">
                                 Acompanhe os atendimentos pendentes. Esses dados são atualizados automaticamente com base nos registros da plataforma.
                             </p>
-                            <a href="#" className="fw-bold text-decoration-none text-lime-green">
+                            <a href="/agendamentos" className="fw-bold text-decoration-none text-lime-green">
                                 Conferir pendentes
                             </a>
                         </div>

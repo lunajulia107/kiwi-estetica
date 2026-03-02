@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 
 const AdminSidebar = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1400);
-  const [usuario, setUsuario] = useState({ nome: '', cargo: '' });
+  const [user, setUser] = useState({ nome: '', cargo: '' });
   const navigate = useNavigate();
 
   const links = {
@@ -18,7 +18,7 @@ const AdminSidebar = () => {
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1400);
     window.addEventListener("resize", handleResize);
- 
+  
     const searchUser = async () => {
       try {
         const response = await fetch('http://localhost:5000/api/admin/usuario-logado', {
@@ -30,11 +30,11 @@ const AdminSidebar = () => {
 
         if (response.ok) {
           const data = await response.json(); 
-          setUsuario({
+          setUser({
             nome: data.nome || 'Usuário',
             cargo: data.cargo || 'Administrador'
           });
-        } else {
+        } else {    
           console.error('Erro ao buscar usuário');
         }
       } catch (error) {
@@ -117,8 +117,9 @@ const AdminSidebar = () => {
                 className="bg-lavender rounded-4"
               />
               <div className="d-flex flex-column small text-white">
-                <strong className="fw-semibold">{usuario.nome}</strong>
-                <span>{usuario.cargo}</span>
+                {/* Corrigido de usuario.nome para user.nome */}
+                <strong className="fw-semibold">{user.nome}</strong>
+                <span>{user.cargo}</span>
               </div>
             </div>
 

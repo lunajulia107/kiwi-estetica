@@ -84,7 +84,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="col-12 col-lg-6 position-relative">
+            <div className="col-12 col-xl-6 position-relative">
               <img
                 alt="Espaço do SPA Kiwi Estética. Sala de estética minimalista com maca coberta por toalhas claras, 
                 produtos de cuidado ao lado e vista para um jardim iluminado pela luz natural."

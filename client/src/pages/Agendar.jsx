@@ -282,7 +282,7 @@ const Agendar = () => {
               </header>
 
               {/* Contatos */}
-              <div className="d-flex flex-column gap-2">
+              <div className="d-none d-lg-flex flex-column gap-2">
                 <IconRow icon="bi bi-whatsapp" as="a" className="text-decoration-none text-white" href="https://wa.me/5511987654321">
                   (11) 98765-4321
                 </IconRow>
@@ -300,11 +300,7 @@ const Agendar = () => {
             </div>
 
             <article className="col-lg-4">
-              <div className="bg-white p-3 p-lg-4 rounded-4">
-                <h3 className="fw-bold mb-2 text-center text-forest-green">
-                  Agendamento
-                </h3>
-
+              <div className="bg-white p-4 rounded-4">  
                 {/* Formulário de agendamento. */}
                 <form className="d-flex flex-column gap-3" onSubmit={handleSubmit}>
                   <FormField label="Nome" name="name" value={formData.name} onChange={handleChange} error={errors.name}/>
