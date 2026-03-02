@@ -119,17 +119,14 @@ const AdminHeader = () => {
                                     </li>
                                 ))} 
                                 <li className="nav-item p-1">
-                                    <a
+                                    <button
+                                        type="button"
                                         className="border-0 btn btn-lime-green btn-sm p-2 pe-3 ps-3 text-white"
-                                        href="#"
-                                        onClick={(e) => {
-                                        e.preventDefault();
-                                        handleLogout();
-                                        }}
+                                        onClick={handleLogout}
                                     >
                                         <i className="bi bi-box-arrow-right me-1"></i>
                                         Sair
-                                    </a>
+                                    </button>
                                 </li>
                             </ul>
                         </div>

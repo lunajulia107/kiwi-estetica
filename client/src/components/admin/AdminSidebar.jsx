@@ -129,17 +129,14 @@ const AdminSidebar = () => {
                 <i className="bi bi-gear-fill"></i>
               </button>
 
-              <a
+              <button
                 className="border-0 btn btn-outline-light btn-sm"
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleLogout();
-                }}
+                type="button"  
+                onClick={handleLogout}
               >
                 <i className="bi bi-box-arrow-right me-1"></i>
                 Sair
-              </a>
+              </button>
             </div>
           </div>
         </aside>
