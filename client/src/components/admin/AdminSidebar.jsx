@@ -116,17 +116,16 @@ const AdminSidebar = () => {
                 height="40"
                 className="bg-lavender rounded-4"
               />
-              <div className="d-flex flex-column small text-white">
-                {/* Corrigido de usuario.nome para user.nome */}
+              <div className="d-flex flex-column small text-white"> 
                 <strong className="fw-semibold">{user.nome}</strong>
-                <span>{user.cargo}</span>
+                <span className="small">{user.cargo}</span>
               </div>
             </div>
 
             <hr className="border-light" />
 
             <div className="d-flex flex-row justify-content-between w-100">
-              <button className="border-0 btn btn-outline-light btn-sm" type="button">
+              <button className="border-0 btn btn-outline-light btn-sm" type="button" disabled>
                 <i className="bi bi-gear-fill"></i>
               </button>
 

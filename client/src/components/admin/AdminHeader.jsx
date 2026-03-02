@@ -85,12 +85,12 @@ const AdminHeader = () => {
 
                     {isMobile && (
                         <div className="collapse mb-4 mt-4 navbar-collapse" id="navbarNav">
-                            <div className="align-items-center d-flex gap-2">
+                            <div className="align-items-center d-flex gap-3">
                                 <img
                                     src={fixedAvatar}
                                     alt="Avatar do usuário logado no sistema."
-                                    width="40"
-                                    height="40"
+                                    width="60"
+                                    height="60"
                                     className="bg-lavender rounded-4"
                                 />
                                 <div className="d-flex flex-column small text-white">
@@ -120,7 +120,7 @@ const AdminHeader = () => {
                                 ))} 
                                 <li className="nav-item p-1">
                                     <a
-                                        className="border-0 btn btn-outline-light btn-sm p-1 pe-2 ps-2"
+                                        className="border-0 btn btn-lime-green btn-sm p-2 pe-3 ps-3 text-white"
                                         href="#"
                                         onClick={(e) => {
                                         e.preventDefault();
