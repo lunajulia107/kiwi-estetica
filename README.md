@@ -136,11 +136,11 @@ npm run start
 
 ## 📸 Fluxos principais
 
-<div align="center">
+<div>
   <h3>Workflow do Cliente</h3>
-  <img src="./client/public/images/fluxo-do-cliente.gif" width="600px">
+  <img src="./client/public/images/fluxo-do-cliente.gif" width="500px">
   <h3>Workflow do Administrado(a)r</h3>
-  <img src="./client/public/images/fluxo-do-adm.gif" width="600px">
+  <img src="./client/public/images/fluxo-do-adm.gif" width="500px">
 </div>
 
 ---
