@@ -49,7 +49,7 @@ const Header = () => {
           </button>
 
           { /* Links de navegação, com destaque para o botão "Agendar" */ }
-          <div className="collapse navbar-collapse" id="navbarNav">
+          <div className="collapse navbar-collapse justify-content--end" id="navbarNav">
             <ul className="navbar-nav ms-auto gap-lg-4 gap-2 mb-4 m-lg-0">
               {links.map((link) => (
                 <li className="nav-item" key={link.id}>
