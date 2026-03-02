@@ -138,9 +138,9 @@ npm run start
 
 <div>
   <h3>Workflow do Cliente</h3>
-  <img src="./client/public/images/fluxo-do-cliente.gif" width="300px">
+  <img src="./client/public/images/fluxo-do-cliente.gif" width="400px">
   <h3>Workflow do Administrado(a)r</h3>
-  <img src="./client/public/images/fluxo-do-adm.gif" width="300px">
+  <img src="./client/public/images/fluxo-do-adm.gif" width="400px">
 </div>
 
 ---
