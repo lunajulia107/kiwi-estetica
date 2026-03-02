@@ -50,6 +50,7 @@ Aplicação **fullstack** composta por:
 * **React** — interface dinâmica e componentizada
 * **Framer Motion** — animações e transições
 * **Axios** — integração com API
+* **Bootstrap** — estruturação de layout responsivo e componentes de interface
 * **Sass** — organização e escalabilidade de estilos
 
 ### Back-end
