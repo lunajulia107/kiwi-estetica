@@ -45,14 +45,14 @@ Aplicação **fullstack** composta por:
 
 ## 🛠 Tecnologias Utilizadas
 
-### Frontend
+### Front-end
 
 * **React** — interface dinâmica e componentizada
 * **Framer Motion** — animações e transições
 * **Axios** — integração com API
 * **Sass** — organização e escalabilidade de estilos
 
-### Backend
+### Back-end
 
 * **Node.js** — execução do servidor
 * **Express** — estruturação de rotas e API REST
@@ -118,25 +118,30 @@ WHATSAPP_PROFESSIONAL_NUMBER=
 
 ### 4️⃣ Rodar aplicação
 
-**Backend**
+**Back-end**
 
 ```bash
 cd server
 npm run dev
 ```
 
-**Frontend**
+**Front-end**
 
 ```bash
 cd client
-npm start
+npm run start
 ```
 
 ---
 
-## 📸 Telas do Sistema
+## 📸 Fluxos principais
 
-*(adicione prints ou GIF demonstrando catálogo, agendamento e painel administrativo)*
+<div align="center">
+  <h3>Workflow do Cliente</h3>
+  <img src="./client/public/images/fluxo-do-cliente.gif" width="600px">
+  <h3>Workflow do Administrado(a)r</h3>
+  <img src="./client/public/images/fluxo-do-adm.gif" width="600px">
+</div>
 
 ---
 
