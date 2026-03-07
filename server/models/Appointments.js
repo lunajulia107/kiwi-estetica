@@ -10,7 +10,7 @@ const Appointment = sequelize.define('Appointment', {
     time: { type: DataTypes.TIME, allowNull: false, field: 'horario' },
     status: { type: DataTypes.STRING, allowNull: false, field: 'status' }
 }, {
-    tableName: 'appointments',
+    tableName: 'agendamentos',
     timestamps: false
 });
 

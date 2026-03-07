@@ -2,9 +2,9 @@ create database if not exists kiwi_estetica;
 use kiwi_estetica;
 
 -- =========================
--- tabela: admins
+-- tabela: administradores
 -- =========================
-create table admins (
+create table administradores (
     id int not null auto_increment primary key,
     email varchar(150) not null,
     nome varchar(150) not null,
@@ -13,9 +13,9 @@ create table admins (
 );
 
 -- =========================
--- tabela: appointments
+-- tabela: agendamentos
 -- =========================
-create table appointments (
+create table agendamentos (
     id int not null auto_increment primary key,
     nome varchar(150) not null,
     celular varchar(20) not null,
