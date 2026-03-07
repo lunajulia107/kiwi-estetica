@@ -12,7 +12,7 @@ Aplicação **fullstack** composta por:
 * **Frontend:** React
 * **Backend:** Node.js + Express
 * **Banco de Dados:** MySQL
-* **Estilização:** Sass
+* **Estilização:** Bootstrap e Sass
 
 ---
 
