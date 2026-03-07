@@ -150,7 +150,7 @@ npm run start
 
 ## 🤝 Créditos do Projeto
 
-Projeto acadêmico desenvolvido em equipe, com divisão de responsabilidades semelhante a um ambiente profissional. A proposta surgiu da necessidade de facilitar o gerenciamento de agendas, já que ainda é muito comum o uso de métodos manuais, como agendas físicas, o que pode dificultar a organização, visualização e controle de horários.
+Projeto acadêmico desenvolvido em equipe, com divisão de responsabilidades. A proposta surgiu da necessidade de facilitar o gerenciamento de agendas, já que ainda é muito comum o uso de métodos manuais, como agendas físicas, o que pode dificultar a organização, visualização e controle de horários.
 
 - 💻 **Desenvolvimento e implementação:** Julia Gomes
 - 🎨 **UI Design:** Samara Duarte
